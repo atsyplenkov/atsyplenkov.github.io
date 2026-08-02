@@ -36,14 +36,44 @@ REQUIRED_MANIFESTS = (
 # Paths every production-equivalent replacement build must emit today.
 REQUIRED_BUILD_PATHS = (
     "index.html",
+    "about/index.html",
+    "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "sitemap.xml",
     "robots.txt",
     "feed.xml",
+    "llms.txt",
+    "about.html",
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
+    "data/Tsyplenkov-Anatoly_CV.pdf",
+    "data/photos/profile.webp",
+    "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
+    "blog/2020-03-03-tidy-tuesday-nhl/figures/boxplot-1.png",
 )
+
+CANONICAL_HOST = "https://anatolii.nz"
+PERSON_ID = f"{CANONICAL_HOST}/#person"
+ALLOWED_SAME_AS = {
+    "https://github.com/atsyplenkov",
+    "https://orcid.org/0000-0003-4144-8402",
+    "https://scholar.google.com/citations?user=IcwW-WAAAAAJ&hl=en",
+    "https://www.linkedin.com/in/atsyplenkov/",
+}
+
+LEGACY_REDIRECTS = {
+    "about.html": "/about/",
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": (
+        "/blog/2020-03-03-tidy-tuesday-nhl/"
+    ),
+}
 
 LOCAL_REF_ATTRS = ("href", "src", "poster", "data")
 CSS_URL_RE = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""", re.I)
 SKIP_SCHEMES = ("http://", "https://", "//", "mailto:", "data:", "javascript:", "tel:")
+META_ATTR_RE = re.compile(
+    r"<meta\s+([^>]+)>",
+    re.I,
+)
+ATTR_RE = re.compile(r"""([^\s=]+)\s*=\s*(['"])(.*?)\2""", re.I | re.S)
 
 
 class AuditError(Exception):
@@ -353,6 +383,390 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def _parse_attrs(attr_text: str) -> dict[str, str]:
+    return {m.group(1).lower(): m.group(3) for m in ATTR_RE.finditer(attr_text)}
+
+
+def extract_page_signals(html_text: str) -> dict:
+    """Pull metadata and JSON-LD signals from a generated HTML document."""
+    title_match = re.search(r"<title>(.*?)</title>", html_text, re.I | re.S)
+    title = re.sub(r"\s+", " ", title_match.group(1)).strip() if title_match else ""
+
+    metas: dict[str, str] = {}
+    for meta in META_ATTR_RE.finditer(html_text):
+        attrs = _parse_attrs(meta.group(1))
+        key = attrs.get("name") or attrs.get("property")
+        if key and "content" in attrs:
+            metas[key.lower()] = attrs["content"]
+
+    canonical = None
+    for link in re.finditer(r"<link\s+([^>]+)>", html_text, re.I):
+        attrs = _parse_attrs(link.group(1))
+        if attrs.get("rel", "").lower() == "canonical":
+            canonical = attrs.get("href")
+
+    lang_match = re.search(r"<html[^>]*\blang=['\"]([^'\"]+)['\"]", html_text, re.I)
+    lang = lang_match.group(1) if lang_match else ""
+
+    json_ld_blocks = []
+    for match in re.finditer(
+        r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>',
+        html_text,
+        re.I | re.S,
+    ):
+        raw = match.group(1).strip()
+        try:
+            json_ld_blocks.append(json.loads(raw))
+        except json.JSONDecodeError as exc:
+            json_ld_blocks.append({"__error__": str(exc), "__raw__": raw[:200]})
+
+    return {
+        "title": title,
+        "metas": metas,
+        "canonical": canonical,
+        "lang": lang,
+        "json_ld": json_ld_blocks,
+        "text": html_text,
+    }
+
+
+def _graph_nodes(blocks: list) -> list[dict]:
+    nodes: list[dict] = []
+    for block in blocks:
+        if not isinstance(block, dict):
+            continue
+        if "@graph" in block and isinstance(block["@graph"], list):
+            nodes.extend(item for item in block["@graph"] if isinstance(item, dict))
+        else:
+            nodes.append(block)
+    return nodes
+
+
+def _find_type(nodes: list[dict], type_name: str) -> dict | None:
+    for node in nodes:
+        value = node.get("@type")
+        if value == type_name:
+            return node
+        if isinstance(value, list) and type_name in value:
+            return node
+    return None
+
+
+def check_page_contract(
+    report: AuditReport,
+    *,
+    site_dir: Path,
+    rel_path: str,
+    expected_type: str,
+    expected_canonical: str,
+) -> None:
+    path = site_dir / rel_path
+    if not path.is_file():
+        report.fail(f"missing page for contract check: /{rel_path}")
+        return
+
+    signals = extract_page_signals(path.read_text(encoding="utf-8", errors="replace"))
+    if not signals["title"]:
+        report.fail(f"missing title: /{rel_path}")
+    else:
+        report.ok(f"title present: /{rel_path}")
+
+    desc = signals["metas"].get("description")
+    if not desc:
+        report.fail(f"missing description: /{rel_path}")
+    else:
+        report.ok(f"description present: /{rel_path}")
+
+    if signals["lang"].lower() != "en":
+        report.fail(f"expected lang=en on /{rel_path}, got {signals['lang']!r}")
+    else:
+        report.ok(f"lang=en: /{rel_path}")
+
+    if signals["canonical"] != expected_canonical:
+        report.fail(
+            f"canonical mismatch on /{rel_path}: "
+            f"expected {expected_canonical}, got {signals['canonical']!r}"
+        )
+    else:
+        report.ok(f"canonical ok: /{rel_path}")
+
+    for key in ("og:title", "og:type", "og:url", "og:description", "og:site_name", "twitter:card"):
+        if key not in signals["metas"] or not signals["metas"][key]:
+            report.fail(f"missing {key} on /{rel_path}")
+        else:
+            report.ok(f"{key} present: /{rel_path}")
+
+    og_image = signals["metas"].get("og:image")
+    if not og_image or not og_image.startswith("https://"):
+        report.fail(f"missing absolute og:image on /{rel_path}")
+    else:
+        report.ok(f"absolute og:image: /{rel_path}")
+
+    if "og:image:alt" not in signals["metas"] and "twitter:image:alt" not in signals["metas"]:
+        report.fail(f"missing social image alt on /{rel_path}")
+    else:
+        report.ok(f"social image alt present: /{rel_path}")
+
+    if "giscus" in signals["text"].lower():
+        report.fail(f"giscus/comment integration present on /{rel_path}")
+    else:
+        report.ok(f"no giscus on /{rel_path}")
+
+    if any(isinstance(block, dict) and "__error__" in block for block in signals["json_ld"]):
+        report.fail(f"invalid JSON-LD on /{rel_path}")
+        return
+    if not signals["json_ld"]:
+        report.fail(f"missing JSON-LD on /{rel_path}")
+        return
+
+    nodes = _graph_nodes(signals["json_ld"])
+    typed = _find_type(nodes, expected_type)
+    if typed is None:
+        report.fail(f"JSON-LD missing @{expected_type} on /{rel_path}")
+    else:
+        report.ok(f"JSON-LD {expected_type} present: /{rel_path}")
+
+    person = _find_type(nodes, "Person")
+    if person is None:
+        report.fail(f"JSON-LD missing Person on /{rel_path}")
+        return
+
+    if person.get("@id") != PERSON_ID:
+        report.fail(f"Person @id mismatch on /{rel_path}: {person.get('@id')!r}")
+    else:
+        report.ok(f"stable Person @id: /{rel_path}")
+
+    same_as = person.get("sameAs") or []
+    if not isinstance(same_as, list):
+        report.fail(f"Person sameAs is not a list on /{rel_path}")
+        return
+    same_set = set(same_as)
+    if same_set != ALLOWED_SAME_AS:
+        report.fail(
+            f"Person sameAs mismatch on /{rel_path}: expected {sorted(ALLOWED_SAME_AS)}, got {sorted(same_set)}"
+        )
+    else:
+        report.ok(f"Person sameAs ok: /{rel_path}")
+
+    if expected_type == "BlogPosting":
+        for field in ("headline", "datePublished", "author", "publisher"):
+            if field not in typed:
+                report.fail(f"BlogPosting missing {field} on /{rel_path}")
+            else:
+                report.ok(f"BlogPosting {field} present: /{rel_path}")
+    if expected_type == "ProfilePage" and "mainEntity" not in (typed or {}):
+        report.fail(f"ProfilePage missing mainEntity on /{rel_path}")
+    elif expected_type == "ProfilePage":
+        report.ok(f"ProfilePage mainEntity present: /{rel_path}")
+
+
+def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="index.html",
+        expected_type="Blog",
+        expected_canonical=f"{CANONICAL_HOST}/",
+    )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="about/index.html",
+        expected_type="ProfilePage",
+        expected_canonical=f"{CANONICAL_HOST}/about/",
+    )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="blog/2020-03-03-tidy-tuesday-nhl/index.html",
+        expected_type="BlogPosting",
+        expected_canonical=f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
+    )
+
+    home_path = site_dir / "index.html"
+    if home_path.is_file():
+        home = home_path.read_text(encoding="utf-8", errors="replace")
+        if "Tidy Tuesday NHL" not in home:
+            report.fail("homepage blog index missing Tidy Tuesday entry")
+        else:
+            report.ok("homepage lists Tidy Tuesday post")
+        # Demo identity markers only — upstream MIT attribution may still name the template repo.
+        if "Ciallo" in home or "tufted-blog.pages.dev" in home:
+            report.fail("homepage still contains template demo identity")
+        else:
+            report.ok("homepage identity is personalized")
+
+    about_path = site_dir / "about/index.html"
+    if about_path.is_file():
+        about = about_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "Manaaki Whenua Landcare Research",
+            "/data/Tsyplenkov-Anatoly_CV.pdf",
+            "orcid.org/0000-0003-4144-8402",
+            "CC BY-SA 4.0",
+        ):
+            if needle not in about:
+                report.fail(f"about page missing expected content: {needle}")
+            else:
+                report.ok(f"about page contains {needle}")
+
+    post_path = site_dir / "blog/2020-03-03-tidy-tuesday-nhl/index.html"
+    if post_path.is_file():
+        post = post_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "top_250",
+            "figures/plot-1.png",
+            "figures/boxplot-1.png",
+            "tidytuesday",
+            "2020-03-03",
+        ):
+            if needle not in post:
+                report.fail(f"Tidy Tuesday post missing expected content: {needle}")
+            else:
+                report.ok(f"Tidy Tuesday post contains {needle}")
+            report.ok(f"Tidy Tuesday post contains {needle}")
+
+
+def check_redirects(report: AuditReport, site_dir: Path) -> None:
+    for rel, target in LEGACY_REDIRECTS.items():
+        path = site_dir / rel
+        if not path.is_file():
+            report.fail(f"missing redirect document: /{rel}")
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        lowered = text.lower()
+        if 'http-equiv="refresh"' not in lowered:
+            report.fail(f"redirect missing meta refresh: /{rel}")
+        else:
+            report.ok(f"redirect has meta refresh: /{rel}")
+        if "noindex" not in lowered:
+            report.fail(f"redirect missing noindex: /{rel}")
+        else:
+            report.ok(f"redirect is noindex: /{rel}")
+        if f'href="{target}"' not in text and f"href='{target}'" not in text:
+            report.fail(f"redirect missing visible fallback to {target}: /{rel}")
+        else:
+            report.ok(f"redirect fallback link ok: /{rel}")
+        if f'href="{CANONICAL_HOST}{target}"' not in text and f'href="{target}"' not in text:
+            # canonical may be absolute
+            if f'rel="canonical"' not in lowered:
+                report.fail(f"redirect missing canonical: /{rel}")
+            else:
+                report.ok(f"redirect canonical present: /{rel}")
+        else:
+            report.ok(f"redirect target referenced: /{rel}")
+
+
+def check_discoverability(report: AuditReport, site_dir: Path) -> None:
+    robots = site_dir / "robots.txt"
+    if robots.is_file():
+        text = robots.read_text(encoding="utf-8", errors="replace")
+        if "Disallow: /" in text and "Allow: /" not in text:
+            report.fail("robots.txt disallows crawling")
+        elif "Allow: /" not in text and "Disallow:" not in text:
+            report.ok("robots.txt present")
+        else:
+            if "Sitemap:" not in text or "anatolii.nz/sitemap.xml" not in text:
+                report.fail("robots.txt missing canonical sitemap reference")
+            else:
+                report.ok("robots.txt allows crawl and references sitemap")
+    else:
+        report.fail("robots.txt missing")
+
+    sitemap = site_dir / "sitemap.xml"
+    feed = site_dir / "feed.xml"
+    llms = site_dir / "llms.txt"
+
+    if sitemap.is_file():
+        sm = sitemap.read_text(encoding="utf-8", errors="replace")
+        try:
+            root = ET.fromstring(sm)
+        except ET.ParseError as exc:
+            report.fail(f"sitemap.xml unparseable: {exc}")
+            root = None
+        if root is not None:
+            locs = [el.text or "" for el in root.iter() if el.tag.endswith("loc")]
+            if not any(loc.rstrip("/") == CANONICAL_HOST for loc in locs) and not any(
+                loc == f"{CANONICAL_HOST}/" for loc in locs
+            ):
+                report.fail("sitemap missing homepage canonical URL")
+            else:
+                report.ok("sitemap includes homepage")
+            if not any("/blog/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
+                report.fail("sitemap missing Tidy Tuesday canonical URL")
+            else:
+                report.ok("sitemap includes Tidy Tuesday post")
+            if any("about.html" in loc or "/posts/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
+                report.fail("sitemap includes redirect/legacy URLs")
+            else:
+                report.ok("sitemap excludes redirect URLs")
+            if any("tufted-blog.pages.dev" in loc for loc in locs):
+                report.fail("sitemap references demo host")
+            else:
+                report.ok("sitemap host is canonical")
+
+    if feed.is_file():
+        fx = feed.read_text(encoding="utf-8", errors="replace")
+        try:
+            root = ET.fromstring(fx)
+        except ET.ParseError as exc:
+            report.fail(f"feed.xml unparseable: {exc}")
+            root = None
+        if root is not None:
+            links = [el.text or "" for el in root.iter() if el.tag.endswith("link")]
+            titles = [el.text or "" for el in root.iter() if el.tag.endswith("title")]
+            if not any("Tidy Tuesday NHL" in t for t in titles):
+                report.fail("RSS missing Tidy Tuesday item")
+            else:
+                report.ok("RSS includes Tidy Tuesday item")
+            if any("about.html" in link or "/posts/2020-03-03-tidy-tuesday-nhl/" in link for link in links):
+                report.fail("RSS includes redirect/legacy URLs")
+            else:
+                report.ok("RSS excludes redirect URLs")
+            if any("tufted-blog.pages.dev" in link for link in links):
+                report.fail("RSS references demo host")
+            else:
+                report.ok("RSS host is canonical")
+
+    if llms.is_file():
+        text = llms.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            f"{CANONICAL_HOST}/about/",
+            f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
+            "Anatoly Tsyplenkov",
+        ):
+            if needle not in text:
+                report.fail(f"llms.txt missing {needle}")
+            else:
+                report.ok(f"llms.txt contains {needle}")
+        if "about.html" in text or "/posts/2020-03-03-tidy-tuesday-nhl/" in text:
+            report.fail("llms.txt advertises redirect/legacy URLs")
+        else:
+            report.ok("llms.txt advertises only canonical URLs")
+    else:
+        report.fail("llms.txt missing")
+
+
+def check_license_notices(report: AuditReport, site_dir: Path) -> None:
+    home = site_dir / "index.html"
+    if home.is_file():
+        text = home.read_text(encoding="utf-8", errors="replace")
+        if "CC BY-SA 4.0" not in text:
+            report.fail("homepage footer missing CC BY-SA 4.0 content notice")
+        else:
+            report.ok("homepage includes CC BY-SA content notice")
+        if "MIT" not in text and "Tufted" not in text:
+            report.fail("homepage footer missing upstream template notice")
+        else:
+            report.ok("homepage includes template attribution")
+
+    license_file = REPO_ROOT / "LICENSE"
+    if license_file.is_file() and "MIT License" in license_file.read_text(encoding="utf-8"):
+        report.ok("repository retains MIT license for template code")
+    else:
+        report.fail("repository MIT license missing")
+
+
 def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
     report = AuditReport()
     manifests = check_manifests(report, freeze_dir)
@@ -362,6 +776,10 @@ def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
         check_assets_from_css(report, site_dir)
         check_xml_files(report, site_dir)
         check_preservation_if_present(report, site_dir, manifests)
+        check_tracer_metadata(report, site_dir)
+        check_redirects(report, site_dir)
+        check_discoverability(report, site_dir)
+        check_license_notices(report, site_dir)
     return report
 
 
@@ -371,7 +789,7 @@ def _write(path: Path, text: str) -> None:
 
 
 def run_self_test() -> int:
-    """Prove the audit fails on controlled malformed artifacts and passes on a minimal good site."""
+    """Prove the audit fails on controlled malformed or incomplete artifacts."""
     import hashlib
 
     failures: list[str] = []
@@ -382,13 +800,6 @@ def run_self_test() -> int:
             failures.append(f"{label}: expected audit failure, got success")
         else:
             print(f"  self-test ok (failed as expected): {label} -> {report.failures[0]}")
-
-    def expect_pass(label: str, site_dir: Path, freeze_dir: Path) -> None:
-        report = audit_site(site_dir, freeze_dir=freeze_dir)
-        if report.failures:
-            failures.append(f"{label}: expected success, got: {report.failures[0]}")
-        else:
-            print(f"  self-test ok (passed as expected): {label}")
 
     def sha_text(text: str) -> str:
         return hashlib.sha256(text.encode()).hexdigest()
@@ -459,36 +870,27 @@ def run_self_test() -> int:
             ),
         )
 
-        good_site = tmp_path / "good_site"
+        base_site = tmp_path / "base_site"
+        _write(base_site / "index.html", "<!doctype html><html lang='en'><body>hi</body></html>")
+        _write(base_site / "robots.txt", "User-agent: *\nAllow: /\n")
         _write(
-            good_site / "index.html",
-            "<!doctype html><html lang='en'><head><title>t</title>"
-            "<link rel='stylesheet' href='/assets/site.css'></head>"
-            "<body><a href='/about/'>About</a></body></html>",
-        )
-        _write(good_site / "about" / "index.html", "<!doctype html><html><body>About</body></html>")
-        _write(good_site / "assets" / "site.css", "body{color:black}")
-        _write(
-            good_site / "sitemap.xml",
+            base_site / "sitemap.xml",
             '<?xml version="1.0" encoding="UTF-8"?>'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-            "<url><loc>https://example.test/</loc></url></urlset>",
+            f"<url><loc>{CANONICAL_HOST}/</loc></url></urlset>",
         )
         _write(
-            good_site / "feed.xml",
+            base_site / "feed.xml",
             '<?xml version="1.0" encoding="UTF-8"?>'
-            "<rss version='2.0'><channel><title>t</title></channel></rss>",
+            "<rss version='2.0'><channel><title>t</title>"
+            f"<link>{CANONICAL_HOST}/</link></channel></rss>",
         )
-        _write(good_site / "robots.txt", "User-agent: *\nAllow: /\n")
-        expect_pass("minimal good site", good_site, freeze)
 
-        missing_sitemap = tmp_path / "missing_sitemap"
-        shutil.copytree(good_site, missing_sitemap)
-        (missing_sitemap / "sitemap.xml").unlink()
-        expect_fail("missing sitemap.xml", missing_sitemap, freeze)
+        # Incomplete tracer site must fail required-path checks.
+        expect_fail("incomplete tracer site", base_site, freeze)
 
         broken_link = tmp_path / "broken_link"
-        shutil.copytree(good_site, broken_link)
+        shutil.copytree(base_site, broken_link)
         _write(
             broken_link / "index.html",
             "<!doctype html><html><body><a href='/missing-page/'>x</a></body></html>",
@@ -496,17 +898,17 @@ def run_self_test() -> int:
         expect_fail("broken local link", broken_link, freeze)
 
         bad_xml = tmp_path / "bad_xml"
-        shutil.copytree(good_site, bad_xml)
+        shutil.copytree(base_site, bad_xml)
         _write(bad_xml / "feed.xml", "<rss><channel>no close")
         expect_fail("malformed feed.xml", bad_xml, freeze)
 
         incomplete_freeze = tmp_path / "incomplete_freeze"
         shutil.copytree(freeze, incomplete_freeze)
         (incomplete_freeze / "baseline.json").unlink()
-        expect_fail("missing baseline manifest", good_site, incomplete_freeze)
+        expect_fail("missing baseline manifest", base_site, incomplete_freeze)
 
         preserved = tmp_path / "preserved"
-        shutil.copytree(good_site, preserved)
+        shutil.copytree(base_site, preserved)
         _write(preserved / "research.html", research_html)
         expect_fail("research entry without dependency", preserved, freeze)
 
@@ -517,7 +919,20 @@ def run_self_test() -> int:
         )
         research["files"]["research.css"]["live_reachable"] = False
         _write(bad_research_freeze / "standalone-research-manifest.json", json.dumps(research))
-        expect_fail("research manifest unreachable path", good_site, bad_research_freeze)
+        expect_fail("research manifest unreachable path", base_site, bad_research_freeze)
+
+        # Missing JSON-LD / social metadata on an otherwise present homepage.
+        no_jsonld = tmp_path / "no_jsonld"
+        shutil.copytree(base_site, no_jsonld)
+        for rel in REQUIRED_BUILD_PATHS:
+            target = no_jsonld / rel
+            if not target.exists():
+                if rel.endswith(".png") or rel.endswith(".webp") or rel.endswith(".pdf") or rel.endswith(".jpg"):
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(b"x")
+                else:
+                    _write(target, "<!doctype html><html lang='en'><head><title>x</title></head><body>x</body></html>")
+        expect_fail("missing structured metadata", no_jsonld, freeze)
 
     if failures:
         print("self-test failures:")
