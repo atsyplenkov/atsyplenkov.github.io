@@ -19,14 +19,18 @@
   title: "",
   author: none,
   description: "",
-  lang: "zh",
+  lang: "en",
   date: none,
   extra-info: none,
   website-title: "",
   website-url: none,
 
-  // For SEO
+  // For SEO / social / structured data
   image-path: none,
+  image-alt: none,
+  page-type: "webpage",
+  keywords: (),
+  person: none,
 
   // For RSS
   feed-dir: (),
@@ -66,7 +70,11 @@
           website-title: website-title,
           website-url: website-url,
           image-path: image-path,
+          image-alt: image-alt,
           feed-dir: feed-dir,
+          page-type: page-type,
+          keywords: keywords,
+          person: person,
         )
 
         // load CSS
