@@ -38,16 +38,19 @@ REQUIRED_BUILD_PATHS = (
     "index.html",
     "about/index.html",
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
+    "blog/2022-03-05-soilgrids-terra/index.html",
     "sitemap.xml",
     "robots.txt",
     "feed.xml",
     "llms.txt",
     "about.html",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
     "data/Tsyplenkov-Anatoly_CV.pdf",
     "data/photos/profile.webp",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/boxplot-1.png",
+    "blog/2022-03-05-soilgrids-terra/figures/unnamed-chunk-5-1.png",
 )
 
 CANONICAL_HOST = "https://anatolii.nz"
@@ -64,7 +67,11 @@ LEGACY_REDIRECTS = {
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": (
         "/blog/2020-03-03-tidy-tuesday-nhl/"
     ),
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html": (
+        "/blog/2022-03-05-soilgrids-terra/"
+    ),
 }
+
 
 LOCAL_REF_ATTRS = ("href", "src", "poster", "data")
 CSS_URL_RE = re.compile(r"""url\(\s*(['"]?)([^'")]+)\1\s*\)""", re.I)
@@ -582,6 +589,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
     )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="blog/2022-03-05-soilgrids-terra/index.html",
+        expected_type="BlogPosting",
+        expected_canonical=f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
+    )
 
     home_path = site_dir / "index.html"
     if home_path.is_file():
@@ -590,6 +604,16 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             report.fail("homepage blog index missing Tidy Tuesday entry")
         else:
             report.ok("homepage lists Tidy Tuesday post")
+        if "Accessing SoilGrids" not in home:
+            report.fail("homepage blog index missing SoilGrids entry")
+        else:
+            report.ok("homepage lists SoilGrids post")
+        soil_index = home.find("Accessing SoilGrids")
+        tidy_index = home.find("Tidy Tuesday NHL")
+        if soil_index == -1 or tidy_index == -1 or soil_index > tidy_index:
+            report.fail("homepage blog entries are not reverse chronological")
+        else:
+            report.ok("homepage blog entries are reverse chronological")
         # Demo identity markers only — upstream MIT attribution may still name the template repo.
         if "Ciallo" in home or "tufted-blog.pages.dev" in home:
             report.fail("homepage still contains template demo identity")
@@ -625,6 +649,24 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             else:
                 report.ok(f"Tidy Tuesday post contains {needle}")
             report.ok(f"Tidy Tuesday post contains {needle}")
+
+    soil_path = site_dir / "blog/2022-03-05-soilgrids-terra/index.html"
+    if soil_path.is_file():
+        soil = soil_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "Accessing SoilGrids via",
+            "Boundary layer",
+            "Download urls",
+            "soilgrids_download",
+            "files.isric.org/soilgrids",
+            "figures/unnamed-chunk-5-1.png",
+            "soil erosion",
+            "2022-03-05",
+        ):
+            if needle not in soil:
+                report.fail(f"SoilGrids post missing expected content: {needle}")
+            else:
+                report.ok(f"SoilGrids post contains {needle}")
 
 
 def check_redirects(report: AuditReport, site_dir: Path) -> None:
@@ -676,6 +718,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
     sitemap = site_dir / "sitemap.xml"
     feed = site_dir / "feed.xml"
     llms = site_dir / "llms.txt"
+    legacy_paths = tuple(LEGACY_REDIRECTS)
 
     if sitemap.is_file():
         sm = sitemap.read_text(encoding="utf-8", errors="replace")
@@ -696,7 +739,11 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing Tidy Tuesday canonical URL")
             else:
                 report.ok("sitemap includes Tidy Tuesday post")
-            if any("about.html" in loc or "/posts/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
+            if not any("/blog/2022-03-05-soilgrids-terra/" in loc for loc in locs):
+                report.fail("sitemap missing SoilGrids canonical URL")
+            else:
+                report.ok("sitemap includes SoilGrids post")
+            if any(legacy_path in loc for loc in locs for legacy_path in legacy_paths):
                 report.fail("sitemap includes redirect/legacy URLs")
             else:
                 report.ok("sitemap excludes redirect URLs")
@@ -719,7 +766,11 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("RSS missing Tidy Tuesday item")
             else:
                 report.ok("RSS includes Tidy Tuesday item")
-            if any("about.html" in link or "/posts/2020-03-03-tidy-tuesday-nhl/" in link for link in links):
+            if not any("Accessing SoilGrids via" in t for t in titles):
+                report.fail("RSS missing SoilGrids item")
+            else:
+                report.ok("RSS includes SoilGrids item")
+            if any(legacy_path in link for link in links for legacy_path in legacy_paths):
                 report.fail("RSS includes redirect/legacy URLs")
             else:
                 report.ok("RSS excludes redirect URLs")
@@ -733,13 +784,14 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
         for needle in (
             f"{CANONICAL_HOST}/about/",
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
+            f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
             "Anatoly Tsyplenkov",
         ):
             if needle not in text:
                 report.fail(f"llms.txt missing {needle}")
             else:
                 report.ok(f"llms.txt contains {needle}")
-        if "about.html" in text or "/posts/2020-03-03-tidy-tuesday-nhl/" in text:
+        if any(legacy_path in text for legacy_path in legacy_paths):
             report.fail("llms.txt advertises redirect/legacy URLs")
         else:
             report.ok("llms.txt advertises only canonical URLs")
