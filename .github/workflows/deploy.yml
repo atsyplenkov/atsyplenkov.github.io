@@ -1,8 +1,9 @@
 name: Deploy
 
+# Deployment remains inactive for ordinary pushes until the approved
+# root-repository handoff. Use workflow_dispatch only after Pages is enabled
+# for the replacement repository.
 on:
-  push:
-    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -11,20 +12,19 @@ permissions:
   id-token: write
 
 jobs:
-  # Build the site
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: typst-community/setup-typst@v4
       - uses: astral-sh/setup-uv@v7
-      - run: uv run build.py build -f
+      - name: Clean build and black-box audit
+        run: uv run scripts/accept.py --skip-self-test
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
-  # Publish to GitHub Pages
   deploy:
     runs-on: ubuntu-latest
     needs: build
