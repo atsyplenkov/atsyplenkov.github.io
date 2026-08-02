@@ -1104,6 +1104,9 @@ def generate_sitemap(site_url: str) -> bool:
 
     # 遍历 _site 目录
     for file_path in sorted(SITE_DIR.rglob("*.html")):
+        if is_redirect_document(file_path):
+            continue
+
         rel_path = file_path.relative_to(SITE_DIR).as_posix()
 
         # 确定 URL 路径
@@ -1159,12 +1162,118 @@ Sitemap: {site_url}/sitemap.xml
         return False
 
 
+# Legacy HTML routes preserved as static redirect documents for GitHub Pages.
+LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
+    ("about.html", "/about/"),
+    (
+        "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
+        "/blog/2020-03-03-tidy-tuesday-nhl/",
+    ),
+)
+
+
+def render_redirect_html(*, target_path: str, canonical_url: str) -> str:
+    """Return a non-indexable static redirect document."""
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting…</title>
+  <link rel="canonical" href="{canonical_url}">
+  <meta http-equiv="refresh" content="0; url={target_path}">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+  <p>This page has moved to <a href="{target_path}">{target_path}</a>.</p>
+</body>
+</html>
+"""
+
+
+def generate_redirects(site_url: str) -> bool:
+    """Write static legacy redirect documents into the generated site."""
+    try:
+        for rel_path, target in LEGACY_REDIRECTS:
+            out = SITE_DIR / rel_path
+            out.parent.mkdir(parents=True, exist_ok=True)
+            canonical = f"{site_url.rstrip('/')}{target}"
+            out.write_text(
+                render_redirect_html(target_path=target, canonical_url=canonical),
+                encoding="utf-8",
+            )
+        print(f"✅ Redirect documents generated: {len(LEGACY_REDIRECTS)}")
+        return True
+    except Exception as e:
+        print(f"❌ Redirect generation failed: {e}")
+        return False
+
+
+def is_redirect_document(path: Path) -> bool:
+    """True when an HTML file is a non-indexable static redirect."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return False
+    lowered = text.lower()
+    return 'http-equiv="refresh"' in lowered and "noindex" in lowered
+
+
+def generate_llms_txt(site_url: str) -> bool:
+    """Write a curated llms.txt for currently available canonical content."""
+    site_url = site_url.rstrip("/")
+    lines = [
+        "# Anatoly Tsyplenkov",
+        "",
+        "> Personal website and blog of Anatoly Tsyplenkov, geomorphologist and software engineer.",
+        "",
+        f"Canonical domain: {site_url}/",
+        "",
+        "## Profile",
+        f"- [About]({site_url}/about/): Biography, professional identity links, and CV download",
+        "",
+        "## Blog",
+    ]
+
+    feed_dirs = get_feed_dirs()
+    posts = collect_posts(feed_dirs, site_url) if feed_dirs else []
+    posts = sorted(posts, key=lambda item: item["date"], reverse=True)
+    if posts:
+        for post in posts:
+            desc = post["description"] or "Blog post"
+            lines.append(f"- [{post['title']}]({post['link']}): {desc}")
+    else:
+        lines.append("- No posts published yet.")
+
+    lines.extend(
+        [
+            "",
+            "## Sections",
+            f"- [Papers]({site_url}/papers/): Publication snapshot (migration in progress)",
+            f"- [Talks]({site_url}/talks/): Talks and media (migration in progress)",
+            f"- [Software]({site_url}/software/): Software and apps (migration in progress)",
+            "",
+            "## Feeds",
+            f"- [RSS]({site_url}/feed.xml)",
+            f"- [Sitemap]({site_url}/sitemap.xml)",
+            "",
+        ]
+    )
+
+    try:
+        (SITE_DIR / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
+        print("✅ llms.txt generated")
+        return True
+    except Exception as e:
+        print(f"❌ llms.txt generation failed: {e}")
+        return False
+
+
 def build(force: bool = False) -> bool:
     """
-    完整构建：HTML + PDF + 资源。
+    Full build: HTML + PDF + assets + discoverability files.
 
-    参数:
-        force: 是否强制重建所有文件
+    Args:
+        force: whether to force a clean rebuild
     """
     print("-" * 60)
     if force:
@@ -1188,9 +1297,11 @@ def build(force: bool = False) -> bool:
     results.append(copy_content_assets(force))
 
     if site_url := get_site_url():
+        results.append(generate_redirects(site_url))
         results.append(generate_sitemap(site_url))
         results.append(generate_robots_txt(site_url))
         results.append(generate_rss(site_url))
+        results.append(generate_llms_txt(site_url))
 
     print("-" * 60)
     if all(results):
