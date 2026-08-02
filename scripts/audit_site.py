@@ -39,6 +39,7 @@ REQUIRED_BUILD_PATHS = (
     "about/index.html",
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "blog/2022-03-05-soilgrids-terra/index.html",
+    "blog/2024-08-06-xgboost-gpu-r/index.html",
     "sitemap.xml",
     "robots.txt",
     "feed.xml",
@@ -46,11 +47,16 @@ REQUIRED_BUILD_PATHS = (
     "about.html",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
+    "posts/2024/xgboost-gpu-r.html",
     "data/Tsyplenkov-Anatoly_CV.pdf",
     "data/photos/profile.webp",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/boxplot-1.png",
     "blog/2022-03-05-soilgrids-terra/figures/unnamed-chunk-5-1.png",
+    "blog/2024-08-06-xgboost-gpu-r/figures/benchmarks.png",
+    "blog/2024-08-06-xgboost-gpu-r/figures/NVCleanstall_escFw822lQ.png",
+    "blog/2024-08-06-xgboost-gpu-r/figures/WindowsTerminal_kTF31RPuRA.png",
+    "blog/2024-08-06-xgboost-gpu-r/figures/benchmarks-1.png",
 )
 
 CANONICAL_HOST = "https://anatolii.nz"
@@ -70,6 +76,7 @@ LEGACY_REDIRECTS = {
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html": (
         "/blog/2022-03-05-soilgrids-terra/"
     ),
+    "posts/2024/xgboost-gpu-r.html": "/blog/2024-08-06-xgboost-gpu-r/",
 }
 
 
@@ -596,6 +603,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
     )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="blog/2024-08-06-xgboost-gpu-r/index.html",
+        expected_type="BlogPosting",
+        expected_canonical=f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
+    )
 
     home_path = site_dir / "index.html"
     if home_path.is_file():
@@ -608,9 +622,19 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             report.fail("homepage blog index missing SoilGrids entry")
         else:
             report.ok("homepage lists SoilGrids post")
+        if "Accelerating XGBoost with GPU in R" not in home:
+            report.fail("homepage blog index missing XGBoost entry")
+        else:
+            report.ok("homepage lists XGBoost post")
         soil_index = home.find("Accessing SoilGrids")
         tidy_index = home.find("Tidy Tuesday NHL")
-        if soil_index == -1 or tidy_index == -1 or soil_index > tidy_index:
+        xgboost_index = home.find("Accelerating XGBoost with GPU in R")
+        if (
+            xgboost_index == -1
+            or soil_index == -1
+            or tidy_index == -1
+            or not xgboost_index < soil_index < tidy_index
+        ):
             report.fail("homepage blog entries are not reverse chronological")
         else:
             report.ok("homepage blog entries are reverse chronological")
@@ -667,6 +691,35 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
                 report.fail(f"SoilGrids post missing expected content: {needle}")
             else:
                 report.ok(f"SoilGrids post contains {needle}")
+
+    xgboost_path = site_dir / "blog/2024-08-06-xgboost-gpu-r/index.html"
+    if xgboost_path.is_file():
+        xgboost = xgboost_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "Accelerating XGBoost with GPU in R",
+            "TL;DR",
+            "What is XGBoost?",
+            "Installation instructions",
+            "Testing GPU support",
+            "BONUS: Kaggle",
+            "xgboost_url",
+            "xgb.DMatrix",
+            "gpu_accelerated.R",
+            "≈6x speed increase",
+            "xgboost.readthedocs.io",
+            "kaggle.com/code/anatoliitsyplenkov/gpu-accelerated-xgboost-in-r",
+            "figures/benchmarks.png",
+            "figures/NVCleanstall_escFw822lQ.png",
+            "figures/WindowsTerminal_kTF31RPuRA.png",
+            "figures/benchmarks-1.png",
+            "2024-08-06",
+            "gpu",
+            "xgboost",
+        ):
+            if needle not in xgboost:
+                report.fail(f"XGBoost post missing expected content: {needle}")
+            else:
+                report.ok(f"XGBoost post contains {needle}")
 
 
 def check_redirects(report: AuditReport, site_dir: Path) -> None:
@@ -743,6 +796,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing SoilGrids canonical URL")
             else:
                 report.ok("sitemap includes SoilGrids post")
+            if not any("/blog/2024-08-06-xgboost-gpu-r/" in loc for loc in locs):
+                report.fail("sitemap missing XGBoost canonical URL")
+            else:
+                report.ok("sitemap includes XGBoost post")
             if any(legacy_path in loc for loc in locs for legacy_path in legacy_paths):
                 report.fail("sitemap includes redirect/legacy URLs")
             else:
@@ -774,6 +831,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("RSS includes redirect/legacy URLs")
             else:
                 report.ok("RSS excludes redirect URLs")
+            if not any("Accelerating XGBoost with GPU in R" in t for t in titles):
+                report.fail("RSS missing XGBoost item")
+            else:
+                report.ok("RSS includes XGBoost item")
             if any("tufted-blog.pages.dev" in link for link in links):
                 report.fail("RSS references demo host")
             else:
@@ -785,6 +846,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             f"{CANONICAL_HOST}/about/",
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
             f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
+            f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
             "Anatoly Tsyplenkov",
         ):
             if needle not in text:

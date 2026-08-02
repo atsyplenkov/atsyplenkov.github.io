@@ -1173,6 +1173,10 @@ LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
         "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
         "/blog/2022-03-05-soilgrids-terra/",
     ),
+    (
+        "posts/2024/xgboost-gpu-r.html",
+        "/blog/2024-08-06-xgboost-gpu-r/",
+    ),
 )
 
 

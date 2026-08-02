@@ -10,6 +10,12 @@
 Notes on R, sediments, geospatial work, and research software.
 
 #tufted.blog-entry(
+  date: datetime(year: 2024, month: 8, day: 6),
+  path: "/blog/2024-08-06-xgboost-gpu-r/",
+  title: "Accelerating XGBoost with GPU in R",
+)
+
+#tufted.blog-entry(
   date: datetime(year: 2022, month: 3, day: 5),
   path: "/blog/2022-03-05-soilgrids-terra/",
   title: "Accessing SoilGrids via {terra}",
