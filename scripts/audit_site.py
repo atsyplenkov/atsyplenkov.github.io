@@ -38,6 +38,7 @@ REQUIRED_BUILD_PATHS = (
     "index.html",
     "about/index.html",
     "papers/index.html",
+    "talks/index.html",
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "blog/2022-03-05-soilgrids-terra/index.html",
     "blog/2024-08-06-xgboost-gpu-r/index.html",
@@ -48,6 +49,7 @@ REQUIRED_BUILD_PATHS = (
     "llms.txt",
     "about.html",
     "papers.html",
+    "talks.html",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
     "posts/2024/xgboost-gpu-r.html",
@@ -81,6 +83,7 @@ ALLOWED_SAME_AS = {
 LEGACY_REDIRECTS = {
     "about.html": "/about/",
     "papers.html": "/papers/",
+    "talks.html": "/talks/",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": (
         "/blog/2020-03-03-tidy-tuesday-nhl/"
     ),
@@ -645,6 +648,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
     check_page_contract(
         report,
         site_dir=site_dir,
+        rel_path="talks/index.html",
+        expected_type="WebPage",
+        expected_canonical=f"{CANONICAL_HOST}/talks/",
+    )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
         rel_path="blog/2020-03-03-tidy-tuesday-nhl/index.html",
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -753,6 +763,63 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             report.fail("Papers page still describes the migration as incomplete")
         else:
             report.ok("Papers page is presented as a completed static snapshot")
+
+    talks_path = site_dir / "talks/index.html"
+    if talks_path.is_file():
+        talks = talks_path.read_text(encoding="utf-8", errors="replace")
+        expected_description = (
+            "Invited talks and workshops by Anatoly Tsyplenkov on landslide "
+            "connectivity, sediment delivery, and soil erosion modeling in R."
+        )
+        signals = extract_page_signals(talks)
+        if signals["metas"].get("description") != expected_description:
+            report.fail("Talks page description is not the reviewed concise description")
+        else:
+            report.ok("Talks page has the reviewed concise description")
+
+        nodes = _graph_nodes(signals["json_ld"])
+        webpage = _find_type(nodes, "WebPage")
+        if webpage is None or webpage.get("description") != expected_description:
+            report.fail("Talks JSON-LD description disagrees with page metadata")
+        else:
+            report.ok("Talks JSON-LD description matches page metadata")
+
+        for needle in (
+            "IAG Webinar Oceania 2024",
+            "5 March 2024",
+            "http://www.geomorph.org/international-geomorphology-week-2024/",
+            "Data-driven insights on shallow landslide connectivity and sediment delivery to streams",
+            "https://storage.yandexcloud.net/iag-talk/iag2024_talk_x264.mp4",
+            "MEGAPOLIS 2022",
+            "6 December 2022",
+            "https://megapolis2022.netlify.app/",
+            "Soil erosion modeling in R",
+            "https://www.youtube.com/embed/B2ian7Gmodc",
+            "https://www.youtube.com/watch?v=B2ian7Gmodc",
+            "<video ",
+            "<source ",
+            "controls=\"controls\"",
+            "<iframe ",
+            "loading=\"lazy\"",
+            "talk-media",
+            "talk-media-fallback",
+            "allowfullscreen",
+        ):
+            if needle not in talks:
+                report.fail(f"Talks page missing expected content: {needle}")
+            else:
+                report.ok(f"Talks page contains {needle}")
+
+        talks_css_path = site_dir / "assets/custom.css"
+        if not talks_css_path.is_file():
+            report.fail("Talks responsive media CSS missing: assets/custom.css")
+        else:
+            talks_css = talks_css_path.read_text(encoding="utf-8", errors="replace")
+            for needle in (".talk-media", "max-width: 100%", "aspect-ratio"):
+                if needle not in talks_css:
+                    report.fail(f"Talks responsive media CSS missing: {needle}")
+                else:
+                    report.ok(f"Talks responsive media CSS contains {needle}")
 
     post_path = site_dir / "blog/2020-03-03-tidy-tuesday-nhl/index.html"
     if post_path.is_file():
@@ -917,6 +984,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing Papers canonical URL")
             else:
                 report.ok("sitemap includes Papers page")
+            if not any("/talks/" in loc for loc in locs):
+                report.fail("sitemap missing Talks canonical URL")
+            else:
+                report.ok("sitemap includes Talks page")
             if any(f"/{path}" in loc for loc in locs for path in NON_CANONICAL_HTML):
                 report.fail("sitemap includes non-canonical publication formats")
             else:
@@ -986,6 +1057,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
         for needle in (
             f"{CANONICAL_HOST}/about/",
             f"{CANONICAL_HOST}/papers/",
+            f"{CANONICAL_HOST}/talks/",
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
             f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
             f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
@@ -1000,6 +1072,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             report.fail("llms.txt advertises redirect/legacy URLs")
         else:
             report.ok("llms.txt advertises only canonical URLs")
+        if "Talks and media (migration in progress)" in text:
+            report.fail("llms.txt still describes Talks as incomplete")
+        else:
+            report.ok("llms.txt describes Talks as migrated")
     else:
         report.fail("llms.txt missing")
 

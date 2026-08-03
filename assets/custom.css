@@ -3,3 +3,43 @@ CUSTOM STYLES
 
 Add your custom CSS styles here to override or extend the default styles.
 *******************************************************************************/
+
+.site-nav {
+  flex-wrap: wrap;
+}
+
+.talk-media {
+  width: 100%;
+  max-width: 100%;
+  margin: 1.5rem 0;
+}
+
+.talk-media video,
+.talk-media iframe {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+}
+
+.talk-media video {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.talk-media iframe {
+  height: min(56.25vw, 36rem);
+  min-height: 18rem;
+}
+
+.talk-media-fallback {
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 40rem) {
+  .talk-media iframe {
+    height: 56.25vw;
+    min-height: 0;
+  }
+}

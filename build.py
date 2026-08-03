@@ -1165,6 +1165,7 @@ Sitemap: {site_url}/sitemap.xml
 LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
     ("about.html", "/about/"),
     ("papers.html", "/papers/"),
+    ("talks.html", "/talks/"),
     (
         "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
         "/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -1266,7 +1267,7 @@ def generate_llms_txt(site_url: str) -> bool:
             "",
             "## Sections",
             f"- [Papers]({site_url}/papers/): Selected peer-reviewed publications, citation snapshot, and downloads",
-            f"- [Talks]({site_url}/talks/): Talks and media (migration in progress)",
+            f"- [Talks]({site_url}/talks/): Invited talks, workshops, and external recordings",
             f"- [Software]({site_url}/software/): Software and apps (migration in progress)",
             "",
             "## Feeds",
