@@ -1189,6 +1189,12 @@ LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
 NON_CANONICAL_HTML = {
     "data/!publ_list.html",
     "data/Tsyplenkov-Anatoly_publications.html",
+    # Standalone research outputs keep their public .html paths and stay
+    # outside the replacement site's canonical navigation/discovery set.
+    "gey_2022-overview.html",
+    "kuban_overview.html",
+    "nil.html",
+    "nil-points.html",
 }
 
 

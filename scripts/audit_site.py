@@ -106,12 +106,23 @@ LEGACY_REDIRECTS = {
 NON_CANONICAL_HTML = {
     "data/!publ_list.html",
     "data/Tsyplenkov-Anatoly_publications.html",
+    "gey_2022-overview.html",
+    "kuban_overview.html",
+    "nil.html",
+    "nil-points.html",
 }
 
 PUBLICATION_CHECKSUM_PATHS = (
     "data/!publ_list.md",
     "data/Tsyplenkov-Anatoly_publications.html",
     "data/Tsyplenkov-Anatoly_publications.pdf",
+)
+
+STANDALONE_RESEARCH_ENTRY_PAGES = (
+    "gey_2022-overview.html",
+    "kuban_overview.html",
+    "nil.html",
+    "nil-points.html",
 )
 
 
@@ -380,46 +391,55 @@ def check_xml_files(report: AuditReport, site_dir: Path) -> None:
             report.ok(f"parseable XML: /{name}")
 
 
-def check_preservation_if_present(
+def check_standalone_research_preservation(
     report: AuditReport, site_dir: Path, manifests: dict[str, dict]
 ) -> None:
-    """If migrated preservation paths are already in the site, enforce them."""
+    """Require every frozen standalone research path with matching checksums."""
     research = manifests.get("standalone-research-manifest.json")
     if not research:
         return
 
     files = research.get("files") or {}
     entry_pages = research.get("entry_pages") or {}
-    present_entries = [
-        path
-        for path in entry_pages
-        if (site_dir / path).is_file() or (site_dir / path.lstrip("/")).is_file()
-    ]
-
-    if not present_entries:
-        report.ok("no standalone research entry pages present yet")
+    if not isinstance(files, dict) or not files:
+        report.fail("standalone research manifest has no files to preserve")
+        return
+    if not isinstance(entry_pages, dict) or not entry_pages:
+        report.fail("standalone research manifest has no entry pages to preserve")
         return
 
-    for entry in present_entries:
-        meta = entry_pages[entry]
-        deps = meta.get("dependencies") or []
-        required = [entry, *deps]
-        for rel in required:
-            rel = rel.lstrip("/")
-            target = site_dir / rel
-            expected = files.get(rel) or files.get("/" + rel) or {}
-            if not target.is_file():
-                report.fail(f"preservation path missing for present research entry: /{rel}")
-                continue
-            actual_sha = _sha256(target)
-            expected_sha = expected.get("sha256")
-            if expected_sha and actual_sha != expected_sha:
+    for rel, meta in sorted(files.items()):
+        rel = rel.lstrip("/")
+        target = site_dir / rel
+        expected_sha = meta.get("sha256") if isinstance(meta, dict) else None
+        if not target.is_file():
+            report.fail(f"standalone research path missing: /{rel}")
+            continue
+        if not expected_sha:
+            report.fail(f"standalone research manifest missing sha256 for: /{rel}")
+            continue
+        actual_sha = _sha256(target)
+        if actual_sha != expected_sha:
+            report.fail(
+                f"standalone research checksum mismatch for /{rel}: "
+                f"expected {expected_sha}, got {actual_sha}"
+            )
+        else:
+            report.ok(f"standalone research path ok: /{rel}")
+
+    for entry, meta in sorted(entry_pages.items()):
+        entry_rel = entry.lstrip("/")
+        deps = meta.get("dependencies") or [] if isinstance(meta, dict) else []
+        for dep in deps:
+            dep_rel = str(dep).lstrip("/")
+            if not (site_dir / dep_rel).is_file():
                 report.fail(
-                    f"preservation checksum mismatch for /{rel}: "
-                    f"expected {expected_sha}, got {actual_sha}"
+                    f"standalone research dependency missing for /{entry_rel}: /{dep_rel}"
                 )
             else:
-                report.ok(f"preservation path ok: /{rel}")
+                report.ok(
+                    f"standalone research dependency present for /{entry_rel}: /{dep_rel}"
+                )
 
 
 def _sha256(path: Path) -> str:
@@ -1140,9 +1160,17 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             else:
                 report.ok("sitemap includes Software page")
             if any(f"/{path}" in loc for loc in locs for path in NON_CANONICAL_HTML):
-                report.fail("sitemap includes non-canonical publication formats")
+                report.fail("sitemap includes non-canonical HTML paths")
             else:
-                report.ok("sitemap excludes non-canonical publication formats")
+                report.ok("sitemap excludes non-canonical HTML paths")
+            if any(
+                entry in loc or entry.removesuffix(".html") in loc
+                for loc in locs
+                for entry in STANDALONE_RESEARCH_ENTRY_PAGES
+            ):
+                report.fail("sitemap includes standalone research outputs")
+            else:
+                report.ok("sitemap excludes standalone research outputs")
             if not any("/blog/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
                 report.fail("sitemap missing Tidy Tuesday canonical URL")
             else:
@@ -1198,6 +1226,14 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("RSS missing ANZGG item")
             else:
                 report.ok("RSS includes ANZGG item")
+            if any(
+                entry in link or entry.removesuffix(".html") in link
+                for link in links
+                for entry in STANDALONE_RESEARCH_ENTRY_PAGES
+            ):
+                report.fail("RSS includes standalone research outputs")
+            else:
+                report.ok("RSS excludes standalone research outputs")
             if any("tufted-blog.pages.dev" in link for link in links):
                 report.fail("RSS references demo host")
             else:
@@ -1228,8 +1264,26 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             report.fail("llms.txt still describes Talks as incomplete")
         else:
             report.ok("llms.txt describes Talks as migrated")
+        if any(
+            entry in text or f"/{entry.removesuffix('.html')}" in text
+            for entry in STANDALONE_RESEARCH_ENTRY_PAGES
+        ):
+            report.fail("llms.txt advertises standalone research outputs")
+        else:
+            report.ok("llms.txt excludes standalone research outputs")
     else:
         report.fail("llms.txt missing")
+
+    home = site_dir / "index.html"
+    if home.is_file():
+        home_text = home.read_text(encoding="utf-8", errors="replace")
+        if any(
+            entry in home_text or f"/{entry.removesuffix('.html')}/" in home_text
+            for entry in STANDALONE_RESEARCH_ENTRY_PAGES
+        ):
+            report.fail("homepage navigation/content links to standalone research outputs")
+        else:
+            report.ok("homepage excludes standalone research outputs from main site content")
 
 
 def check_license_notices(report: AuditReport, site_dir: Path) -> None:
@@ -1260,7 +1314,7 @@ def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
         check_html_and_links(report, site_dir)
         check_assets_from_css(report, site_dir)
         check_xml_files(report, site_dir)
-        check_preservation_if_present(report, site_dir, manifests)
+        check_standalone_research_preservation(report, site_dir, manifests)
         check_publication_preservation(report, site_dir, manifests)
         check_tracer_metadata(report, site_dir)
         check_software_content(report, site_dir)
@@ -1398,6 +1452,24 @@ def run_self_test() -> int:
         shutil.copytree(base_site, preserved)
         _write(preserved / "research.html", research_html)
         expect_fail("research entry without dependency", preserved, freeze)
+
+        # Production-shaped site missing frozen research paths must fail.
+        complete_without_research = tmp_path / "complete_without_research"
+        shutil.copytree(base_site, complete_without_research)
+        for rel in REQUIRED_BUILD_PATHS:
+            target = complete_without_research / rel
+            if target.exists():
+                continue
+            if rel.endswith((".png", ".webp", ".pdf", ".jpg", ".jpeg", ".gif", ".woff")):
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(b"x")
+            else:
+                _write(
+                    target,
+                    "<!doctype html><html lang='en'><head><title>x</title></head>"
+                    "<body>x</body></html>",
+                )
+        expect_fail("complete site missing standalone research", complete_without_research, freeze)
 
         bad_research_freeze = tmp_path / "bad_research_freeze"
         shutil.copytree(freeze, bad_research_freeze)
