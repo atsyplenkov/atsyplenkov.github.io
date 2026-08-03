@@ -76,6 +76,11 @@ REQUIRED_BUILD_PATHS = (
     "blog/2024-08-06-xgboost-gpu-r/figures/NVCleanstall_escFw822lQ.png",
     "blog/2024-08-06-xgboost-gpu-r/figures/WindowsTerminal_kTF31RPuRA.png",
     "blog/2024-08-06-xgboost-gpu-r/figures/benchmarks-1.png",
+    "404.html",
+    "data/dem.tiff",
+    "data/dem.tiff.aux.xml",
+    "data/social-logo.svg",
+    "data/photos/profile-square.jpg",
 )
 
 CANONICAL_HOST = "https://anatolii.nz"
@@ -104,6 +109,7 @@ LEGACY_REDIRECTS = {
 }
 
 NON_CANONICAL_HTML = {
+    "404.html",
     "data/!publ_list.html",
     "data/Tsyplenkov-Anatoly_publications.html",
     "gey_2022-overview.html",
@@ -116,6 +122,32 @@ PUBLICATION_CHECKSUM_PATHS = (
     "data/!publ_list.md",
     "data/Tsyplenkov-Anatoly_publications.html",
     "data/Tsyplenkov-Anatoly_publications.pdf",
+)
+
+# Byte-preserved legacy downloads that must remain at published paths.
+# Note: data/!publ_list.html is required as a useful publication-list format but is
+# a simplified static snapshot (not the Quarto-wrapped freeze bytes).
+LEGACY_DOWNLOAD_CHECKSUM_PATHS = (
+    "data/!publ_list.md",
+    "data/Tsyplenkov-Anatoly_CV.pdf",
+    "data/Tsyplenkov-Anatoly_publications.html",
+    "data/Tsyplenkov-Anatoly_publications.pdf",
+    "data/dem.tiff",
+    "data/dem.tiff.aux.xml",
+    "data/logos/hydrotranslate.png",
+    "data/logos/rewriter.png",
+    "data/photos/profile-square.jpg",
+    "data/photos/profile.webp",
+    "data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf",
+    "data/social-logo.svg",
+)
+
+EXPECTED_NAV = (
+    ("/", "Home"),
+    ("/about/", "About"),
+    ("/papers/", "Papers"),
+    ("/talks/", "Talks"),
+    ("/software/", "Software"),
 )
 
 STANDALONE_RESEARCH_ENTRY_PAGES = (
@@ -473,6 +505,159 @@ def check_publication_preservation(
             report.fail(f"publication preservation checksum mismatch: /{rel}")
         else:
             report.ok(f"publication preservation path ok: /{rel}")
+
+
+def check_legacy_download_preservation(
+    report: AuditReport, site_dir: Path, manifests: dict[str, dict]
+) -> None:
+    """Require frozen legacy downloads at their published paths."""
+    legacy = manifests.get("legacy-production-manifest.json")
+    if not legacy:
+        return
+
+    files = legacy.get("files") or {}
+    for rel in LEGACY_DOWNLOAD_CHECKSUM_PATHS:
+        target = site_dir / rel
+        expected = files.get(rel) or {}
+        expected_sha = expected.get("sha256")
+        if not target.is_file():
+            report.fail(f"legacy download missing: /{rel}")
+        elif not expected_sha:
+            report.fail(f"legacy manifest missing download checksum: /{rel}")
+        elif _sha256(target) != expected_sha:
+            report.fail(f"legacy download checksum mismatch: /{rel}")
+        else:
+            report.ok(f"legacy download path ok: /{rel}")
+
+
+def check_404_page(report: AuditReport, site_dir: Path) -> None:
+    """Custom 404 must help navigation and stay non-canonical."""
+    path = site_dir / "404.html"
+    if not path.is_file():
+        report.fail("custom 404 page missing: /404.html")
+        return
+
+    text = path.read_text(encoding="utf-8", errors="replace")
+    lowered = text.lower()
+    report.ok("custom 404 page present: /404.html")
+
+    if "noindex" not in lowered:
+        report.fail("404 page missing noindex robots directive")
+    else:
+        report.ok("404 page is non-indexable")
+
+    if 'rel="canonical"' in lowered:
+        report.fail("404 page must not declare a canonical URL")
+    else:
+        report.ok("404 page has no canonical URL")
+
+    for href, label in EXPECTED_NAV:
+        if href not in text or label not in text:
+            report.fail(f"404 page missing navigation link {label} -> {href}")
+        else:
+            report.ok(f"404 page links to {label}")
+
+    if "page not found" not in lowered and "not found" not in lowered:
+        report.fail("404 page missing not-found messaging")
+    else:
+        report.ok("404 page explains the missing resource")
+
+
+def check_final_site_certification(report: AuditReport, site_dir: Path) -> None:
+    """Final integration checks across nav, demo absence, and presentation seams."""
+    home_path = site_dir / "index.html"
+    if not home_path.is_file():
+        report.fail("homepage missing for final certification")
+        return
+
+    home = home_path.read_text(encoding="utf-8", errors="replace")
+
+    # Exact primary navigation labels/targets on the homepage.
+    nav_hrefs = re.findall(
+        r'<nav class="site-nav">(.*?)</nav>', home, flags=re.I | re.S
+    )
+    nav_blob = nav_hrefs[0] if nav_hrefs else home
+    nav_links = re.findall(r'<a href="([^"]+)">([^<]+)</a>', nav_blob)
+    expected_links = list(EXPECTED_NAV)
+    if nav_links != expected_links:
+        report.fail(
+            "homepage navigation is not exactly Home/About/Papers/Talks/Software: "
+            f"got {nav_links!r}"
+        )
+    else:
+        report.ok("homepage navigation is exactly Home/About/Papers/Talks/Software")
+
+    demo_markers = (
+        ("Ciallo", "Ciallo"),
+        ("tufted-blog.pages.dev", "tufted-blog.pages.dev"),
+        ("/docs/", "/docs/"),
+        (">Docs</a>", "Docs nav item"),
+        ('href="/cv/"', "/cv/"),
+        ('href="/app/"', "/app/"),
+    )
+    for needle, label in demo_markers:
+        if needle in home:
+            report.fail(f"homepage still exposes demo/template surface: {label}")
+        else:
+            report.ok(f"homepage free of demo marker: {label}")
+
+    # Homepage post links must be dated canonical blog URLs only.
+    post_links = re.findall(r'href="(/blog/[^"]+)"', home)
+    if not post_links:
+        report.fail("homepage has no blog post links")
+    else:
+        bad = [link for link in post_links if not re.fullmatch(r"/blog/\d{4}-\d{2}-\d{2}-[^/]+/", link)]
+        if bad:
+            report.fail(f"homepage has non-canonical blog links: {bad[:3]}")
+        else:
+            report.ok("homepage blog links use dated canonical URLs")
+
+    # Presentation smoke checks used by the certification review.
+    if 'name="viewport"' not in home:
+        report.fail("homepage missing responsive viewport meta")
+    else:
+        report.ok("homepage includes responsive viewport meta")
+
+    if "theme-toggle" not in home or "/assets/theme-toggle.js" not in home:
+        report.fail("homepage missing theme switching controls")
+    else:
+        report.ok("homepage includes theme switching controls")
+
+    post = site_dir / "blog/2020-03-03-tidy-tuesday-nhl/index.html"
+    if post.is_file():
+        post_html = post.read_text(encoding="utf-8", errors="replace")
+        if "<pre" not in post_html or "<code" not in post_html:
+            report.fail("blog post missing code blocks for presentation review")
+        else:
+            report.ok("blog post includes code blocks")
+        if ".png" not in post_html and "<img" not in post_html:
+            report.fail("blog post missing figures for presentation review")
+        else:
+            report.ok("blog post includes figures")
+
+    talks = site_dir / "talks/index.html"
+    if talks.is_file():
+        talks_html = talks.read_text(encoding="utf-8", errors="replace")
+        if "<video" not in talks_html and "youtube.com/embed" not in talks_html:
+            report.fail("Talks page missing embedded media for presentation review")
+        else:
+            report.ok("Talks page includes embedded media")
+
+    about = site_dir / "about/index.html"
+    if about.is_file():
+        about_html = about.read_text(encoding="utf-8", errors="replace")
+        if "/data/Tsyplenkov-Anatoly_CV.pdf" not in about_html:
+            report.fail("About page missing CV PDF link")
+        else:
+            report.ok("About page links to CV PDF")
+
+    anzgg = site_dir / "blog/2024-02-11-anzgg2024/index.html"
+    if anzgg.is_file():
+        anzgg_html = anzgg.read_text(encoding="utf-8", errors="replace")
+        if "Harmel" not in anzgg_html and "reference" not in anzgg_html.lower():
+            report.fail("ANZGG post missing citations for presentation review")
+        else:
+            report.ok("ANZGG post includes citations")
 
 
 def _parse_attrs(attr_text: str) -> dict[str, str]:
@@ -1171,6 +1356,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap includes standalone research outputs")
             else:
                 report.ok("sitemap excludes standalone research outputs")
+            if any("404" in loc for loc in locs):
+                report.fail("sitemap includes 404 page")
+            else:
+                report.ok("sitemap excludes 404 page")
             if not any("/blog/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
                 report.fail("sitemap missing Tidy Tuesday canonical URL")
             else:
@@ -1316,10 +1505,13 @@ def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
         check_xml_files(report, site_dir)
         check_standalone_research_preservation(report, site_dir, manifests)
         check_publication_preservation(report, site_dir, manifests)
+        check_legacy_download_preservation(report, site_dir, manifests)
+        check_404_page(report, site_dir)
         check_tracer_metadata(report, site_dir)
         check_software_content(report, site_dir)
         check_redirects(report, site_dir)
         check_discoverability(report, site_dir)
+        check_final_site_certification(report, site_dir)
         check_license_notices(report, site_dir)
     return report
 

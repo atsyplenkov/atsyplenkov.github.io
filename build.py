@@ -1187,6 +1187,7 @@ LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
 )
 
 NON_CANONICAL_HTML = {
+    "404.html",
     "data/!publ_list.html",
     "data/Tsyplenkov-Anatoly_publications.html",
     # Standalone research outputs keep their public .html paths and stay
@@ -1231,6 +1232,65 @@ def generate_redirects(site_url: str) -> bool:
         return True
     except Exception as e:
         print(f"❌ Redirect generation failed: {e}")
+        return False
+
+
+def render_404_html() -> str:
+    """Return a helpful, non-indexable custom 404 page with main navigation."""
+    return """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page not found — Anatoly Tsyplenkov</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="The requested page could not be found on Anatoly Tsyplenkov's website.">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css">
+  <link rel="stylesheet" href="/assets/tufted.css">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/custom.css">
+  <script src="/assets/theme-toggle.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="site-nav">
+      <a href="/">Home</a>
+      <a href="/about/">About</a>
+      <a href="/papers/">Papers</a>
+      <a href="/talks/">Talks</a>
+      <a href="/software/">Software</a>
+      <button id="theme-toggle" class="theme-toggle-btn" type="button" aria-label="Toggle theme"></button>
+    </nav>
+  </header>
+  <article>
+    <section>
+      <h1>Page not found</h1>
+      <p>The page you requested is not available. Try one of these destinations:</p>
+      <ul>
+        <li><a href="/">Home</a> — blog index</li>
+        <li><a href="/about/">About</a> — biography and CV</li>
+        <li><a href="/papers/">Papers</a> — publications</li>
+        <li><a href="/talks/">Talks</a> — talks and media</li>
+        <li><a href="/software/">Software</a> — projects and apps</li>
+      </ul>
+    </section>
+  </article>
+  <footer>Published content © 2020–2026 Anatoly Tsyplenkov, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.<br>Site template based on <a href="https://github.com/Yousa-Mirage/Tufted-Blog-Template">Tufted Blog Template</a> (MIT).</footer>
+</body>
+</html>
+"""
+
+
+def generate_404() -> bool:
+    """Write the custom GitHub Pages 404 document into the generated site."""
+    try:
+        out = SITE_DIR / "404.html"
+        out.write_text(render_404_html(), encoding="utf-8")
+        print("✅ 404 page generated")
+        return True
+    except Exception as e:
+        print(f"❌ 404 generation failed: {e}")
         return False
 
 
@@ -1324,6 +1384,7 @@ def build(force: bool = False) -> bool:
 
     if site_url := get_site_url():
         results.append(generate_redirects(site_url))
+        results.append(generate_404())
         results.append(generate_sitemap(site_url))
         results.append(generate_robots_txt(site_url))
         results.append(generate_rss(site_url))
