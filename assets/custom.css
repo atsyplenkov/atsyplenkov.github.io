@@ -37,6 +37,50 @@ Add your custom CSS styles here to override or extend the default styles.
   margin-top: 0.75rem;
 }
 
+.software-badge {
+  display: inline-block;
+  height: 1.25em;
+  width: auto;
+  margin-left: 0.35rem;
+  vertical-align: -0.2em;
+}
+
+.software-apps {
+  margin-top: 2rem;
+}
+
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.software-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border-color, #bbb);
+  border-radius: 0.35rem;
+}
+
+.software-card > img {
+  width: 5rem;
+  height: 5rem;
+  flex: 0 0 5rem;
+  object-fit: contain;
+}
+
+.software-card-body {
+  min-width: 0;
+}
+
+.software-card-body h4 {
+  margin-top: 0;
+}
+
 @media (max-width: 40rem) {
   .talk-media iframe {
     height: 56.25vw;

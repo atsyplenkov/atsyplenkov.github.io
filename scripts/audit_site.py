@@ -18,6 +18,7 @@ import shutil
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
+from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Iterable
@@ -39,6 +40,7 @@ REQUIRED_BUILD_PATHS = (
     "about/index.html",
     "papers/index.html",
     "talks/index.html",
+    "software/index.html",
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "blog/2022-03-05-soilgrids-terra/index.html",
     "blog/2024-08-06-xgboost-gpu-r/index.html",
@@ -50,6 +52,8 @@ REQUIRED_BUILD_PATHS = (
     "about.html",
     "papers.html",
     "talks.html",
+    "software.html",
+    "app.html",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
     "posts/2024/xgboost-gpu-r.html",
@@ -62,6 +66,9 @@ REQUIRED_BUILD_PATHS = (
     "data/Tsyplenkov-Anatoly_publications.html",
     "data/Tsyplenkov-Anatoly_publications.pdf",
     "data/photos/profile.webp",
+    "data/logos/hydrotranslate.png",
+    "data/logos/rewriter.png",
+    "data/logos/zepter.png",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/boxplot-1.png",
     "blog/2022-03-05-soilgrids-terra/figures/unnamed-chunk-5-1.png",
@@ -84,6 +91,8 @@ LEGACY_REDIRECTS = {
     "about.html": "/about/",
     "papers.html": "/papers/",
     "talks.html": "/talks/",
+    "software.html": "/software/",
+    "app.html": "/software/#apps",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": (
         "/blog/2020-03-03-tidy-tuesday-nhl/"
     ),
@@ -655,6 +664,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
     check_page_contract(
         report,
         site_dir=site_dir,
+        rel_path="software/index.html",
+        expected_type="WebPage",
+        expected_canonical=f"{CANONICAL_HOST}/software/",
+    )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
         rel_path="blog/2020-03-03-tidy-tuesday-nhl/index.html",
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -944,6 +960,137 @@ def check_redirects(report: AuditReport, site_dir: Path) -> None:
             report.ok(f"redirect target referenced: /{rel}")
 
 
+def check_software_content(report: AuditReport, site_dir: Path) -> None:
+    software_path = site_dir / "software/index.html"
+    if not software_path.is_file():
+        return
+
+    software = software_path.read_text(encoding="utf-8", errors="replace")
+    software_text = unescape(software)
+    expected_description = (
+        "Software projects, web apps, editor extensions, and R packages by Anatoly "
+        "Tsyplenkov, including hydrological tools and research software."
+    )
+    signals = extract_page_signals(software)
+    if signals["metas"].get("description") != expected_description:
+        report.fail("Software page does not use the reviewed concise description")
+    else:
+        report.ok("Software page has the reviewed concise description")
+
+    required_content = (
+        "Web Apps & VS Code extensions",
+        "pastum",
+        "VS Code extension for inserting text tables as dataframe objects into the editor",
+        "detect-chatgpt",
+        "Experimental app for detecting excessive word usage by ChatGPT",
+        "bibtex2html",
+        "App for converting bibliography references to BibTeX format",
+        "hydrotranslate",
+        "Russian-English dictionary of hydrological terms",
+        "JavaScript",
+        "Python",
+        "Streamlit",
+        "Py-Shiny",
+        "R-Shiny",
+        "Packages",
+        "centerline",
+        "Centerline extraction and plotting for closed geometries",
+        "tidyhydro",
+        "C++ boosted commonly used hydrological metrics for",
+        "tidymodels",
+        "framework",
+        "loadflux",
+        "Tools for turbidity and event sediment transport analysis",
+        "rusleR",
+        "Soil erosion estimation based on the RUSLE model",
+        "rp5pik",
+        "Access meteorological data from pogodaiklimat.ru",
+        "tgme",
+        "Send messages to Telegram from R",
+        "HBVr",
+        "Access HBV model parameters dataset from Beck et al. (2021)",
+        "Apps",
+        "Below is a list of a",
+        "Shiny",
+        "atsyplenkov.pp.ru",
+        "Hydrotranslate",
+        "English-Russian and Russian-English translator of hydrological terms and definitions.",
+        "DScn. Sergey Chalov",
+        "Dr. Vsevolod Moreydo",
+        "Zepter",
+        "currency conversion",
+        "MIR payment system",
+        "up-to-date exchange rates",
+        "Rewriter",
+        "paraphrasing",
+        "Sber model",
+        "same meaning",
+        "Launch App",
+        "Github",
+    )
+    for needle in required_content:
+        if needle not in software_text:
+            report.fail(f"Software page missing expected content: {needle}")
+        else:
+            report.ok(f"Software page contains {needle}")
+
+    project_links = (
+        "https://github.com/atsyplenkov/pastum",
+        "https://github.com/atsyplenkov/detect-chatgpt",
+        "https://github.com/atsyplenkov/bibtex2html",
+        "https://github.com/atsyplenkov/hydrotranslate",
+        "https://github.com/atsyplenkov/centerline",
+        "https://github.com/atsyplenkov/tidyhydro",
+        "https://github.com/atsyplenkov/loadflux",
+        "https://github.com/atsyplenkov/rusleR",
+        "https://github.com/atsyplenkov/rp5pik",
+        "https://github.com/atsyplenkov/tgme",
+        "https://github.com/atsyplenkov/HBVr",
+        "https://hydrotranslate.ru/",
+        "https://github.com/atsyplenkov/shiny-server/tree/master/zepter",
+        "https://atsyplenkov.pp.ru/shiny/zepter",
+        "https://sbercloud.ru/ru/datahub/rugpt3family/demo-rewrite",
+        "https://atsyplenkov.pp.ru/shiny/sber",
+        "https://github.com/atsyplenkov/shiny-server/tree/master/sber",
+    )
+    for link in project_links:
+        if link not in software_text:
+            report.fail(f"Software page missing project link: {link}")
+        else:
+            report.ok(f"Software page contains project link: {link}")
+
+    version_badges = (
+        "img.shields.io/github/r-package/v/atsyplenkov/centerline",
+        "img.shields.io/github/r-package/v/atsyplenkov/tidyhydro",
+        "img.shields.io/github/r-package/v/atsyplenkov/loadflux",
+        "img.shields.io/github/r-package/v/atsyplenkov/rusleR",
+        "img.shields.io/github/r-package/v/atsyplenkov/rp5pik",
+        "img.shields.io/github/r-package/v/atsyplenkov/tgme",
+        "img.shields.io/github/r-package/v/atsyplenkov/HBVr",
+    )
+    for badge in version_badges:
+        if badge not in software_text:
+            report.fail(f"Software page missing version badge: {badge}")
+        else:
+            report.ok(f"Software page contains version badge: {badge}")
+
+    if 'id="apps"' not in software:
+        report.fail("Software page Apps section is not addressable as #apps")
+    else:
+        report.ok("Software page Apps section is addressable as #apps")
+
+    css_path = site_dir / "assets/custom.css"
+    if not css_path.is_file():
+        report.fail("Software responsive CSS missing: assets/custom.css")
+    else:
+        css = css_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (".software-grid", ".software-card", "grid-template-columns", "@media"):
+            if needle not in css:
+                report.fail(f"Software responsive CSS missing: {needle}")
+            else:
+                report.ok(f"Software responsive CSS contains {needle}")
+
+
 def check_discoverability(report: AuditReport, site_dir: Path) -> None:
     robots = site_dir / "robots.txt"
     if robots.is_file():
@@ -988,6 +1135,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing Talks canonical URL")
             else:
                 report.ok("sitemap includes Talks page")
+            if not any("/software/" in loc for loc in locs):
+                report.fail("sitemap missing Software canonical URL")
+            else:
+                report.ok("sitemap includes Software page")
             if any(f"/{path}" in loc for loc in locs for path in NON_CANONICAL_HTML):
                 report.fail("sitemap includes non-canonical publication formats")
             else:
@@ -1058,6 +1209,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             f"{CANONICAL_HOST}/about/",
             f"{CANONICAL_HOST}/papers/",
             f"{CANONICAL_HOST}/talks/",
+            f"{CANONICAL_HOST}/software/",
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
             f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
             f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
@@ -1111,6 +1263,7 @@ def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
         check_preservation_if_present(report, site_dir, manifests)
         check_publication_preservation(report, site_dir, manifests)
         check_tracer_metadata(report, site_dir)
+        check_software_content(report, site_dir)
         check_redirects(report, site_dir)
         check_discoverability(report, site_dir)
         check_license_notices(report, site_dir)

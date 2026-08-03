@@ -1166,6 +1166,8 @@ LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
     ("about.html", "/about/"),
     ("papers.html", "/papers/"),
     ("talks.html", "/talks/"),
+    ("software.html", "/software/"),
+    ("app.html", "/software/#apps"),
     (
         "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
         "/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -1268,7 +1270,7 @@ def generate_llms_txt(site_url: str) -> bool:
             "## Sections",
             f"- [Papers]({site_url}/papers/): Selected peer-reviewed publications, citation snapshot, and downloads",
             f"- [Talks]({site_url}/talks/): Invited talks, workshops, and external recordings",
-            f"- [Software]({site_url}/software/): Software and apps (migration in progress)",
+            f"- [Software]({site_url}/software/): Software projects, web apps, editor extensions, and R packages, including hydrological tools and research software.",
             "",
             "## Feeds",
             f"- [RSS]({site_url}/feed.xml)",
