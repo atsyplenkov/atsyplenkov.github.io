@@ -1104,10 +1104,9 @@ def generate_sitemap(site_url: str) -> bool:
 
     # 遍历 _site 目录
     for file_path in sorted(SITE_DIR.rglob("*.html")):
-        if is_redirect_document(file_path):
-            continue
-
         rel_path = file_path.relative_to(SITE_DIR).as_posix()
+        if is_redirect_document(file_path) or rel_path in NON_CANONICAL_HTML:
+            continue
 
         # 确定 URL 路径
         if rel_path == "index.html":
@@ -1165,6 +1164,7 @@ Sitemap: {site_url}/sitemap.xml
 # Legacy HTML routes preserved as static redirect documents for GitHub Pages.
 LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
     ("about.html", "/about/"),
+    ("papers.html", "/papers/"),
     (
         "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
         "/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -1182,6 +1182,11 @@ LEGACY_REDIRECTS: tuple[tuple[str, str], ...] = (
         "/blog/2024-02-11-anzgg2024/",
     ),
 )
+
+NON_CANONICAL_HTML = {
+    "data/!publ_list.html",
+    "data/Tsyplenkov-Anatoly_publications.html",
+}
 
 
 def render_redirect_html(*, target_path: str, canonical_url: str) -> str:
@@ -1260,7 +1265,7 @@ def generate_llms_txt(site_url: str) -> bool:
         [
             "",
             "## Sections",
-            f"- [Papers]({site_url}/papers/): Publication snapshot (migration in progress)",
+            f"- [Papers]({site_url}/papers/): Selected peer-reviewed publications, citation snapshot, and downloads",
             f"- [Talks]({site_url}/talks/): Talks and media (migration in progress)",
             f"- [Software]({site_url}/software/): Software and apps (migration in progress)",
             "",

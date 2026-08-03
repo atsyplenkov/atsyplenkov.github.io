@@ -37,6 +37,7 @@ REQUIRED_MANIFESTS = (
 REQUIRED_BUILD_PATHS = (
     "index.html",
     "about/index.html",
+    "papers/index.html",
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "blog/2022-03-05-soilgrids-terra/index.html",
     "blog/2024-08-06-xgboost-gpu-r/index.html",
@@ -46,6 +47,7 @@ REQUIRED_BUILD_PATHS = (
     "feed.xml",
     "llms.txt",
     "about.html",
+    "papers.html",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
     "posts/2024/xgboost-gpu-r.html",
@@ -53,6 +55,10 @@ REQUIRED_BUILD_PATHS = (
     "data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf",
     "posts/anzgg2024_caucasus-poster_tsyplenkov.png",
     "data/Tsyplenkov-Anatoly_CV.pdf",
+    "data/!publ_list.html",
+    "data/!publ_list.md",
+    "data/Tsyplenkov-Anatoly_publications.html",
+    "data/Tsyplenkov-Anatoly_publications.pdf",
     "data/photos/profile.webp",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/boxplot-1.png",
@@ -74,6 +80,7 @@ ALLOWED_SAME_AS = {
 
 LEGACY_REDIRECTS = {
     "about.html": "/about/",
+    "papers.html": "/papers/",
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": (
         "/blog/2020-03-03-tidy-tuesday-nhl/"
     ),
@@ -83,6 +90,17 @@ LEGACY_REDIRECTS = {
     "posts/2024/xgboost-gpu-r.html": "/blog/2024-08-06-xgboost-gpu-r/",
     "posts/anzgg2024.html": "/blog/2024-02-11-anzgg2024/",
 }
+
+NON_CANONICAL_HTML = {
+    "data/!publ_list.html",
+    "data/Tsyplenkov-Anatoly_publications.html",
+}
+
+PUBLICATION_CHECKSUM_PATHS = (
+    "data/!publ_list.md",
+    "data/Tsyplenkov-Anatoly_publications.html",
+    "data/Tsyplenkov-Anatoly_publications.pdf",
+)
 
 
 LOCAL_REF_ATTRS = ("href", "src", "poster", "data")
@@ -402,6 +420,29 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def check_publication_preservation(
+    report: AuditReport, site_dir: Path, manifests: dict[str, dict]
+) -> None:
+    """Verify byte-preserved publication formats against the legacy manifest."""
+    legacy = manifests.get("legacy-production-manifest.json")
+    if not legacy:
+        return
+
+    files = legacy.get("files") or {}
+    for rel in PUBLICATION_CHECKSUM_PATHS:
+        target = site_dir / rel
+        expected = files.get(rel) or {}
+        expected_sha = expected.get("sha256")
+        if not target.is_file():
+            report.fail(f"publication preservation path missing: /{rel}")
+        elif not expected_sha:
+            report.fail(f"legacy manifest missing publication checksum: /{rel}")
+        elif _sha256(target) != expected_sha:
+            report.fail(f"publication preservation checksum mismatch: /{rel}")
+        else:
+            report.ok(f"publication preservation path ok: /{rel}")
+
+
 def _parse_attrs(attr_text: str) -> dict[str, str]:
     return {m.group(1).lower(): m.group(3) for m in ATTR_RE.finditer(attr_text)}
 
@@ -597,6 +638,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
     check_page_contract(
         report,
         site_dir=site_dir,
+        rel_path="papers/index.html",
+        expected_type="WebPage",
+        expected_canonical=f"{CANONICAL_HOST}/papers/",
+    )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
         rel_path="blog/2020-03-03-tidy-tuesday-nhl/index.html",
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
@@ -675,6 +723,36 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
                 report.fail(f"about page missing expected content: {needle}")
             else:
                 report.ok(f"about page contains {needle}")
+
+    papers_path = site_dir / "papers/index.html"
+    if papers_path.is_file():
+        papers = papers_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "selected peer-reviewed publications",
+            "Google Scholar",
+            "ORCID",
+            "WoS",
+            "stats as of 07 November 2024",
+            "54 scientific papers",
+            "254 citations",
+            "h-index: 9",
+            "Flash Floods on the Northern Coast of the Black Sea",
+            "Ecological Revitalization Master Plan of Lipetsk City",
+            "Assessment of Basin Component of Suspended Sediment Yield",
+            "/data/Tsyplenkov-Anatoly_publications.pdf",
+            "/data/!publ_list.md",
+            "/data/!publ_list.html",
+            "/data/Tsyplenkov-Anatoly_publications.html",
+        ):
+            if needle not in papers:
+                report.fail(f"Papers page missing expected content: {needle}")
+            else:
+                report.ok(f"Papers page contains {needle}")
+
+        if "migration in progress" in papers.lower():
+            report.fail("Papers page still describes the migration as incomplete")
+        else:
+            report.ok("Papers page is presented as a completed static snapshot")
 
     post_path = site_dir / "blog/2020-03-03-tidy-tuesday-nhl/index.html"
     if post_path.is_file():
@@ -835,6 +913,14 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing homepage canonical URL")
             else:
                 report.ok("sitemap includes homepage")
+            if not any("/papers/" in loc for loc in locs):
+                report.fail("sitemap missing Papers canonical URL")
+            else:
+                report.ok("sitemap includes Papers page")
+            if any(f"/{path}" in loc for loc in locs for path in NON_CANONICAL_HTML):
+                report.fail("sitemap includes non-canonical publication formats")
+            else:
+                report.ok("sitemap excludes non-canonical publication formats")
             if not any("/blog/2020-03-03-tidy-tuesday-nhl/" in loc for loc in locs):
                 report.fail("sitemap missing Tidy Tuesday canonical URL")
             else:
@@ -899,6 +985,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
         text = llms.read_text(encoding="utf-8", errors="replace")
         for needle in (
             f"{CANONICAL_HOST}/about/",
+            f"{CANONICAL_HOST}/papers/",
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
             f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
             f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
@@ -946,6 +1033,7 @@ def audit_site(site_dir: Path, freeze_dir: Path = FREEZE_DIR) -> AuditReport:
         check_assets_from_css(report, site_dir)
         check_xml_files(report, site_dir)
         check_preservation_if_present(report, site_dir, manifests)
+        check_publication_preservation(report, site_dir, manifests)
         check_tracer_metadata(report, site_dir)
         check_redirects(report, site_dir)
         check_discoverability(report, site_dir)
