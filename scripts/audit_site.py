@@ -40,6 +40,7 @@ REQUIRED_BUILD_PATHS = (
     "blog/2020-03-03-tidy-tuesday-nhl/index.html",
     "blog/2022-03-05-soilgrids-terra/index.html",
     "blog/2024-08-06-xgboost-gpu-r/index.html",
+    "blog/2024-02-11-anzgg2024/index.html",
     "sitemap.xml",
     "robots.txt",
     "feed.xml",
@@ -48,6 +49,9 @@ REQUIRED_BUILD_PATHS = (
     "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
     "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
     "posts/2024/xgboost-gpu-r.html",
+    "posts/anzgg2024.html",
+    "data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf",
+    "posts/anzgg2024_caucasus-poster_tsyplenkov.png",
     "data/Tsyplenkov-Anatoly_CV.pdf",
     "data/photos/profile.webp",
     "blog/2020-03-03-tidy-tuesday-nhl/figures/plot-1.png",
@@ -77,6 +81,7 @@ LEGACY_REDIRECTS = {
         "/blog/2022-03-05-soilgrids-terra/"
     ),
     "posts/2024/xgboost-gpu-r.html": "/blog/2024-08-06-xgboost-gpu-r/",
+    "posts/anzgg2024.html": "/blog/2024-02-11-anzgg2024/",
 }
 
 
@@ -610,6 +615,13 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
         expected_type="BlogPosting",
         expected_canonical=f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
     )
+    check_page_contract(
+        report,
+        site_dir=site_dir,
+        rel_path="blog/2024-02-11-anzgg2024/index.html",
+        expected_type="BlogPosting",
+        expected_canonical=f"{CANONICAL_HOST}/blog/2024-02-11-anzgg2024/",
+    )
 
     home_path = site_dir / "index.html"
     if home_path.is_file():
@@ -626,14 +638,20 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             report.fail("homepage blog index missing XGBoost entry")
         else:
             report.ok("homepage lists XGBoost post")
+        if "Supplementary material to poster presentation @ ANZGG 2024" not in home:
+            report.fail("homepage blog index missing ANZGG 2024 entry")
+        else:
+            report.ok("homepage lists ANZGG 2024 post")
         soil_index = home.find("Accessing SoilGrids")
         tidy_index = home.find("Tidy Tuesday NHL")
         xgboost_index = home.find("Accelerating XGBoost with GPU in R")
+        anzgg_index = home.find("Supplementary material to poster presentation @ ANZGG 2024")
         if (
-            xgboost_index == -1
+            anzgg_index == -1
+            or xgboost_index == -1
             or soil_index == -1
             or tidy_index == -1
-            or not xgboost_index < soil_index < tidy_index
+            or not xgboost_index < anzgg_index < soil_index < tidy_index
         ):
             report.fail("homepage blog entries are not reverse chronological")
         else:
@@ -721,6 +739,35 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
             else:
                 report.ok(f"XGBoost post contains {needle}")
 
+    anzgg_path = site_dir / "blog/2024-02-11-anzgg2024/index.html"
+    if anzgg_path.is_file():
+        anzgg = anzgg_path.read_text(encoding="utf-8", errors="replace")
+        for needle in (
+            "Supplementary material to poster presentation @ ANZGG 2024",
+            "Insights into spatial and temporal changes in suspended sediment yield in the Caucasus Mountains during the Anthropocene",
+            "Hello World!",
+            "BTW",
+            "Download Poster",
+            "/data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf",
+            "/posts/anzgg2024_caucasus-poster_tsyplenkov.png",
+            "caucasus-sediment-yield",
+            "caucasus-sediment-yield2021",
+            "sediment-caucasus-anthropocene",
+            "Harmel",
+            "Steegen",
+            "Vanmaercke",
+            "Williams",
+            "10.1002/hyp.14403",
+            "10.3390/w13223173",
+            "10.5194/piahs-381-87-2019",
+            "2024-02-11",
+            "academia",
+        ):
+            if needle not in anzgg:
+                report.fail(f"ANZGG post missing expected content: {needle}")
+            else:
+                report.ok(f"ANZGG post contains {needle}")
+
 
 def check_redirects(report: AuditReport, site_dir: Path) -> None:
     for rel, target in LEGACY_REDIRECTS.items():
@@ -800,6 +847,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("sitemap missing XGBoost canonical URL")
             else:
                 report.ok("sitemap includes XGBoost post")
+            if not any("/blog/2024-02-11-anzgg2024/" in loc for loc in locs):
+                report.fail("sitemap missing ANZGG canonical URL")
+            else:
+                report.ok("sitemap includes ANZGG post")
             if any(legacy_path in loc for loc in locs for legacy_path in legacy_paths):
                 report.fail("sitemap includes redirect/legacy URLs")
             else:
@@ -835,6 +886,10 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
                 report.fail("RSS missing XGBoost item")
             else:
                 report.ok("RSS includes XGBoost item")
+            if not any("Supplementary material to poster presentation @ ANZGG 2024" in t for t in titles):
+                report.fail("RSS missing ANZGG item")
+            else:
+                report.ok("RSS includes ANZGG item")
             if any("tufted-blog.pages.dev" in link for link in links):
                 report.fail("RSS references demo host")
             else:
@@ -847,6 +902,7 @@ def check_discoverability(report: AuditReport, site_dir: Path) -> None:
             f"{CANONICAL_HOST}/blog/2020-03-03-tidy-tuesday-nhl/",
             f"{CANONICAL_HOST}/blog/2022-03-05-soilgrids-terra/",
             f"{CANONICAL_HOST}/blog/2024-08-06-xgboost-gpu-r/",
+            f"{CANONICAL_HOST}/blog/2024-02-11-anzgg2024/",
             "Anatoly Tsyplenkov",
         ):
             if needle not in text:
