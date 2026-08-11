@@ -1,10 +1,6 @@
 name: Deploy
 
-# After the root-repository handoff (rename to atsyplenkov.github.io + Pages
-# source = GitHub Actions), this workflow publishes the certified replacement
-# at the default user-site URL https://atsyplenkov.github.io for pre-cutover
-# staging. Canonical domain and Netlify DNS are unchanged until a later phase.
-#
+# Publish the certified site via GitHub Actions Pages.
 # Production build + black-box audit always gate the Pages artifact.
 on:
   push:

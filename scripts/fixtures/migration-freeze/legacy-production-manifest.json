@@ -1,0 +1,977 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-02T15:30:35.904401+00:00",
+  "artifact": {
+    "description": "Legacy Quarto production build artifact frozen from quarto-blog/_site at the recorded source revision. Live reachability checked for pages, downloads, figures, and root machine files. HTML byte sizes may differ slightly from live Netlify-transformed responses; sha256 values are of the source-revision artifact.",
+    "source_repository": "atsyplenkov/quarto-blog",
+    "source_revision": "27df661d835c705f3f612029075f8056d93c0249",
+    "source_commit_date": "2025-05-14T23:38:13Z",
+    "local_artifact_root": "quarto-blog/_site",
+    "file_count": 116
+  },
+  "files": {
+    "404.html": {
+      "path": "/404.html",
+      "sha256": "206c6ed7b1ec1ed51a46ef54aaeb74891832dd41e1c8ec0f2db6ef2683a69475",
+      "bytes": 25217,
+      "role": "page"
+    },
+    "about.html": {
+      "path": "/about.html",
+      "sha256": "fb60dde1ea74a14c89d5b4b32234f61e43d1f13a5232c38e2d7dc764d2bbedb0",
+      "bytes": 30372,
+      "role": "page"
+    },
+    "app.html": {
+      "path": "/app.html",
+      "sha256": "191b6406cd2c97119b5387ae01a41455f8b3eacb71b8f3e6dfa7dd8ffac13541",
+      "bytes": 28875,
+      "role": "page"
+    },
+    "data/!publ_list.html": {
+      "path": "/data/!publ_list.html",
+      "sha256": "71433f9b94b867c5ba42a22ff893a5bd23afedfc99e02ec58ee4a91975104e02",
+      "bytes": 35111,
+      "role": "page"
+    },
+    "data/!publ_list.md": {
+      "path": "/data/!publ_list.md",
+      "sha256": "fd0f3ce99db02f93980a8c68c52ea1857e205ca08bbe05716471a910c7882495",
+      "bytes": 8617,
+      "role": "download-or-data"
+    },
+    "data/Tsyplenkov-Anatoly_CV.pdf": {
+      "path": "/data/Tsyplenkov-Anatoly_CV.pdf",
+      "sha256": "3bd4a9f7934d119efba436053d005bcd012b9d99a5ba2330b914dd28376f940b",
+      "bytes": 145070,
+      "role": "download-or-data"
+    },
+    "data/Tsyplenkov-Anatoly_publications.html": {
+      "path": "/data/Tsyplenkov-Anatoly_publications.html",
+      "sha256": "007b74ee99de6d0c42f5f770a57c6fadddf69aa12aef973ed8026e2051695536",
+      "bytes": 631814,
+      "role": "page"
+    },
+    "data/Tsyplenkov-Anatoly_publications.pdf": {
+      "path": "/data/Tsyplenkov-Anatoly_publications.pdf",
+      "sha256": "81a7ce83182939e42bf3b6808cd2021e28f24503eec1dcf88cee090082de7966",
+      "bytes": 127032,
+      "role": "download-or-data"
+    },
+    "data/dem.tiff": {
+      "path": "/data/dem.tiff",
+      "sha256": "7d25bbb57cc491fbe6bf96625821f359a31640273cf88cce978acbb93039a9e7",
+      "bytes": 499545,
+      "role": "download-or-data"
+    },
+    "data/dem.tiff.aux.xml": {
+      "path": "/data/dem.tiff.aux.xml",
+      "sha256": "2d1bbdad840214c7e32d974072e1b4acd768876ab0a2f46777a15fc79788eb76",
+      "bytes": 415,
+      "role": "download-or-data"
+    },
+    "data/logos/hydrotranslate.png": {
+      "path": "/data/logos/hydrotranslate.png",
+      "sha256": "f0906b3bfe00e4b41ce20a7d5e78e5b9fc3c2ce75fd310dab96fd087c19c124b",
+      "bytes": 19055,
+      "role": "download-or-data"
+    },
+    "data/logos/rewriter.png": {
+      "path": "/data/logos/rewriter.png",
+      "sha256": "099ef99f6dc206a71b5601483f1996316e27f439c3fc0f0726a37c2275fa92c5",
+      "bytes": 16347,
+      "role": "download-or-data"
+    },
+    "data/photos/profile-square.jpg": {
+      "path": "/data/photos/profile-square.jpg",
+      "sha256": "fffc638a7746fc370d9b1dc0eafde448efa69691a1e69af76674b2f1828f51eb",
+      "bytes": 1511365,
+      "role": "download-or-data"
+    },
+    "data/photos/profile.webp": {
+      "path": "/data/photos/profile.webp",
+      "sha256": "89447ae28efc7612f0b4538af977f3f40232ea7065d47cfe5e0f36b6aae48a9b",
+      "bytes": 325078,
+      "role": "download-or-data"
+    },
+    "data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf": {
+      "path": "/data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf",
+      "sha256": "104c576bc0e74559a82c86f0062c75ed6a3a0ad36cccadd2d18556b7bb1be1d7",
+      "bytes": 2654114,
+      "role": "download-or-data"
+    },
+    "data/social-logo.svg": {
+      "path": "/data/social-logo.svg",
+      "sha256": "04abf6d3efd19356789f3582be0c010ffac5c95060e0eead327a39853b1df2b7",
+      "bytes": 3048566,
+      "role": "download-or-data"
+    },
+    "favicon.svg": {
+      "path": "/favicon.svg",
+      "sha256": "7eff43c9b69012b0c5176143302f6923bca33913894c7a19f3ac0ba18ff51ec9",
+      "bytes": 741087,
+      "role": "asset"
+    },
+    "index.html": {
+      "path": "/index.html",
+      "sha256": "c8723fc2c4674dc0b8241bb0c2cd6417fc94116701f044cf5cd247b79ed9db59",
+      "bytes": 36192,
+      "role": "page"
+    },
+    "listings.json": {
+      "path": "/listings.json",
+      "sha256": "709e5c8cf1ae6085b1d241b4af41ea35c45d686f28bd74ada4c935862d8a1e0a",
+      "bytes": 284,
+      "role": "asset"
+    },
+    "papers.html": {
+      "path": "/papers.html",
+      "sha256": "af082a4b0730b121e8e3404a32fda84b0a94dc8eef0f32c22002a2e7a615ad60",
+      "bytes": 39610,
+      "role": "page"
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": {
+      "path": "/posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html",
+      "sha256": "b7ad4edaa0969b923135699d697d7a72eda508f8a9ff3751aca9779628623b01",
+      "bytes": 53263,
+      "role": "page"
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/boxplot-1.png": {
+      "path": "/posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/boxplot-1.png",
+      "sha256": "2cce04b667f996b9fcfe2a59950ab5c929ecc59e87d1de124da6bf25495f3e28",
+      "bytes": 33244,
+      "role": "figure"
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/plot-1.png": {
+      "path": "/posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/plot-1.png",
+      "sha256": "a43fd45f0d5817bf8f8780ad4c6691f38c52c261051186472e4098a2fc361496",
+      "bytes": 56324,
+      "role": "figure"
+    },
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html": {
+      "path": "/posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html",
+      "sha256": "44cd8541d54e6550c2bed251c7aa8714084a064a58ebf066b4d41dfc294a7ce9",
+      "bytes": 53405,
+      "role": "page"
+    },
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra_files/figure-html/unnamed-chunk-5-1.png": {
+      "path": "/posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra_files/figure-html/unnamed-chunk-5-1.png",
+      "sha256": "a40145b8765e83c58213fdeb046a9baf48ab0f1476eb7b9bb2472f7e92aa590e",
+      "bytes": 199547,
+      "role": "figure"
+    },
+    "posts/2024/figures/NVCleanstall_escFw822lQ.png": {
+      "path": "/posts/2024/figures/NVCleanstall_escFw822lQ.png",
+      "sha256": "c1d572757fb6c5f3bd63508168b80bcd3656636b7f6df382395dab87e821b1d3",
+      "bytes": 41316,
+      "role": "figure"
+    },
+    "posts/2024/figures/WindowsTerminal_kTF31RPuRA.png": {
+      "path": "/posts/2024/figures/WindowsTerminal_kTF31RPuRA.png",
+      "sha256": "13d0da6f0d82235644eaa7490bed3e52d53b35c52d6b81c0ca665df53ebd537b",
+      "bytes": 53312,
+      "role": "figure"
+    },
+    "posts/2024/figures/benchmarks.png": {
+      "path": "/posts/2024/figures/benchmarks.png",
+      "sha256": "44ebf7a83ef3301f98c9dd796bb678b1baa5c07edf3c21a00448992762f52cea",
+      "bytes": 21999,
+      "role": "figure"
+    },
+    "posts/2024/xgboost-gpu-r.html": {
+      "path": "/posts/2024/xgboost-gpu-r.html",
+      "sha256": "ced5d797792fbc84a91383ddd95df13abb87d2145e05951c1c7626826084f98e",
+      "bytes": 63686,
+      "role": "page"
+    },
+    "posts/2024/xgboost-gpu-r_files/figure-html/benchmarks-1.png": {
+      "path": "/posts/2024/xgboost-gpu-r_files/figure-html/benchmarks-1.png",
+      "sha256": "4de09aab8029dd4c05b0f9315659bbf120f8117a89214ec5fb7f08052cb846a8",
+      "bytes": 21972,
+      "role": "figure"
+    },
+    "posts/anzgg2024.html": {
+      "path": "/posts/anzgg2024.html",
+      "sha256": "ce5c2f26264197e72a98190e51c1510e04c6e3b449152a00f5c6d8b64e2c0c8f",
+      "bytes": 36425,
+      "role": "page"
+    },
+    "posts/anzgg2024_caucasus-poster_tsyplenkov.png": {
+      "path": "/posts/anzgg2024_caucasus-poster_tsyplenkov.png",
+      "sha256": "8fda9b56f53bad908bfe03d0b55dd3c30dbc5e9b93cc6ce77a4658900f836398",
+      "bytes": 1055687,
+      "role": "figure"
+    },
+    "robots.txt": {
+      "path": "/robots.txt",
+      "sha256": "ed5885ab4820d2fc3d0ecfa8acaef2b1d226168ecd1198b82d598a7eec0e9e4e",
+      "bytes": 662,
+      "role": "asset"
+    },
+    "search.json": {
+      "path": "/search.json",
+      "sha256": "21b78f1eb59eb772de7545bc669524521169f5c61c3f4e2c8107ae8fab1941be",
+      "bytes": 48282,
+      "role": "asset"
+    },
+    "site_libs/HomeButton-0.0.1/LICENSE": {
+      "path": "/site_libs/HomeButton-0.0.1/LICENSE",
+      "sha256": "493347d470dcdc53e57e31c4f325351b59f1092af77970720f247186801642bc",
+      "bytes": 1059,
+      "role": "site-lib"
+    },
+    "site_libs/HomeButton-0.0.1/easy-button-src.min.js": {
+      "path": "/site_libs/HomeButton-0.0.1/easy-button-src.min.js",
+      "sha256": "d42eb2abe3e05f1ae8279156d6166c1e8112a6c2cc3bd16554dcb9c16bc80e22",
+      "bytes": 5024,
+      "role": "site-lib"
+    },
+    "site_libs/HomeButton-0.0.1/glyphicons-21-home.png": {
+      "path": "/site_libs/HomeButton-0.0.1/glyphicons-21-home.png",
+      "sha256": "7d68b490241c154f04d3eb2bf99fe3ed38d66214ac04d2ce23780a315a90de45",
+      "bytes": 1266,
+      "role": "site-lib"
+    },
+    "site_libs/HomeButton-0.0.1/home-button.css": {
+      "path": "/site_libs/HomeButton-0.0.1/home-button.css",
+      "sha256": "e2231084ac9f7deea9e7fa5393cabb57ce9aeb7595e668b50832b95bfb04a159",
+      "bytes": 1417,
+      "role": "site-lib"
+    },
+    "site_libs/HomeButton-0.0.1/home-button.js": {
+      "path": "/site_libs/HomeButton-0.0.1/home-button.js",
+      "sha256": "50055c3aa7cbade0c15cdcf8500f471e028b1706e23ded35549892720fc2c681",
+      "bytes": 1017,
+      "role": "site-lib"
+    },
+    "site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js": {
+      "path": "/site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js",
+      "sha256": "bad275d7afde929591045eda7efd167a3877d5df6d4d753affc9a54eae249faf",
+      "bytes": 7466,
+      "role": "site-lib"
+    },
+    "site_libs/bootstrap/bootstrap-icons.css": {
+      "path": "/site_libs/bootstrap/bootstrap-icons.css",
+      "sha256": "152fd5debd2be7258c7cd5e1bedb0555205864cb7fbb86f6f03a3ae647ce52d0",
+      "bytes": 98163,
+      "role": "site-lib"
+    },
+    "site_libs/bootstrap/bootstrap-icons.woff": {
+      "path": "/site_libs/bootstrap/bootstrap-icons.woff",
+      "sha256": "4d4572ef314e1b734cdd6485f913b0396d81bedf4d216a47cfde0cdf32a9316e",
+      "bytes": 176200,
+      "role": "site-lib"
+    },
+    "site_libs/bootstrap/bootstrap.min.css": {
+      "path": "/site_libs/bootstrap/bootstrap.min.css",
+      "sha256": "cfc628636dbee3fdefca0ea8a39adaffab6916832a27a7c8118def12a2767b6b",
+      "bytes": 477842,
+      "role": "site-lib"
+    },
+    "site_libs/bootstrap/bootstrap.min.js": {
+      "path": "/site_libs/bootstrap/bootstrap.min.js",
+      "sha256": "d2ea6c1e0cabca20d18e924b25a1cd0187c38ba7c33f60ab06e1b0402b9bcdb5",
+      "bytes": 80668,
+      "role": "site-lib"
+    },
+    "site_libs/clipboard/clipboard.min.js": {
+      "path": "/site_libs/clipboard/clipboard.min.js",
+      "sha256": "e17a1d816e13c0826e0ed7febfabc3277f45571234bde0bf9120829a7169edc9",
+      "bytes": 9160,
+      "role": "site-lib"
+    },
+    "site_libs/clipboard-0.0.1/setClipboardText.js": {
+      "path": "/site_libs/clipboard-0.0.1/setClipboardText.js",
+      "sha256": "084c83938858cd9fdf85cc0d98e0ec0e12bad45648357947ff5a0c9795e493f4",
+      "bytes": 1652,
+      "role": "site-lib"
+    },
+    "site_libs/cookie-consent/cookie-consent.css": {
+      "path": "/site_libs/cookie-consent/cookie-consent.css",
+      "sha256": "9be199c11f99e906de71b99a9d4e7e113b979007c90125d7c49a593bc7f22e28",
+      "bytes": 75,
+      "role": "site-lib"
+    },
+    "site_libs/cookie-consent/cookie-consent.js": {
+      "path": "/site_libs/cookie-consent/cookie-consent.js",
+      "sha256": "a5f1c67af502a8be3e97864d877b59df981ae363d16a7bb59badf11a19e456c5",
+      "bytes": 194672,
+      "role": "site-lib"
+    },
+    "site_libs/dygraphs-1.1.1/dygraph-combined-dev.js": {
+      "path": "/site_libs/dygraphs-1.1.1/dygraph-combined-dev.js",
+      "sha256": "0652c89e21dd379f98ea9dcf0f892540f2f6ace6e74cd3ef06957b5875b1342d",
+      "bytes": 410196,
+      "role": "site-lib"
+    },
+    "site_libs/dygraphs-1.1.1/dygraph-combined.js": {
+      "path": "/site_libs/dygraphs-1.1.1/dygraph-combined.js",
+      "sha256": "d60ed177d7efbc4ba471b04b6b4546d609edfe321303d396c6f5168645fe9a97",
+      "bytes": 125463,
+      "role": "site-lib"
+    },
+    "site_libs/dygraphs-1.1.1/dygraph.css": {
+      "path": "/site_libs/dygraphs-1.1.1/dygraph.css",
+      "sha256": "4f5fbb25ace73ac42b8e8144f25ab12802bf390b18f13e647cd9e2ab7da364c0",
+      "bytes": 104,
+      "role": "site-lib"
+    },
+    "site_libs/dygraphs-1.1.1/shapes.js": {
+      "path": "/site_libs/dygraphs-1.1.1/shapes.js",
+      "sha256": "b8f7c00d531f65e17a4b160ff684d89fee5ceed74c2f4b848980907c52b0fb43",
+      "bytes": 3304,
+      "role": "site-lib"
+    },
+    "site_libs/dygraphs-binding-1.1.1.6/dygraphs.js": {
+      "path": "/site_libs/dygraphs-binding-1.1.1.6/dygraphs.js",
+      "sha256": "a4f21afb861e0810769832d73f9836602c441e6c54b8085a36665a48aff4cb53",
+      "bytes": 27860,
+      "role": "site-lib"
+    },
+    "site_libs/htmlwidgets-1.5.4/htmlwidgets.js": {
+      "path": "/site_libs/htmlwidgets-1.5.4/htmlwidgets.js",
+      "sha256": "27b6476686b65371035c32f4ad7b548824c4e180a55f62801e740e09e84336e5",
+      "bytes": 33196,
+      "role": "site-lib"
+    },
+    "site_libs/htmlwidgets-1.6.1/htmlwidgets.js": {
+      "path": "/site_libs/htmlwidgets-1.6.1/htmlwidgets.js",
+      "sha256": "4578d2a0732228ac3381eb2b3dfd81d30dc1d8000beb96a1b20e4f2088b2b9a4",
+      "bytes": 33190,
+      "role": "site-lib"
+    },
+    "site_libs/jquery-1.11.1/AUTHORS.txt": {
+      "path": "/site_libs/jquery-1.11.1/AUTHORS.txt",
+      "sha256": "19ffc23f3adf180dc08b86c6eb9ee85211f47e2cffa90ad6ad44a264865b1f02",
+      "bytes": 8048,
+      "role": "site-lib"
+    },
+    "site_libs/jquery-1.11.1/jquery.min.js": {
+      "path": "/site_libs/jquery-1.11.1/jquery.min.js",
+      "sha256": "540bc6dec1dd4b92ea4d3fb903f69eabf6d919afd48f4e312b163c28cff0f441",
+      "bytes": 95786,
+      "role": "site-lib"
+    },
+    "site_libs/jquery-1.12.4/jquery.min.js": {
+      "path": "/site_libs/jquery-1.12.4/jquery.min.js",
+      "sha256": "668b046d12db350ccba6728890476b3efee53b2f42dbb84743e5e9f1ae0cc404",
+      "bytes": 97163,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/images/layers-2x.png": {
+      "path": "/site_libs/leaflet-1.3.1/images/layers-2x.png",
+      "sha256": "066daca850d8ffbef007af00b06eac0015728dee279c51f3cb6c716df7c42edf",
+      "bytes": 1259,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/images/layers.png": {
+      "path": "/site_libs/leaflet-1.3.1/images/layers.png",
+      "sha256": "1dbbe9d028e292f36fcba8f8b3a28d5e8932754fc2215b9ac69e4cdecf5107c6",
+      "bytes": 696,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/images/marker-icon-2x.png": {
+      "path": "/site_libs/leaflet-1.3.1/images/marker-icon-2x.png",
+      "sha256": "00179c4c1ee830d3a108412ae0d294f55776cfeb085c60129a39aa6fc4ae2528",
+      "bytes": 2464,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/images/marker-icon.png": {
+      "path": "/site_libs/leaflet-1.3.1/images/marker-icon.png",
+      "sha256": "574c3a5cca85f4114085b6841596d62f00d7c892c7b03f28cbfa301deb1dc437",
+      "bytes": 1466,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/images/marker-shadow.png": {
+      "path": "/site_libs/leaflet-1.3.1/images/marker-shadow.png",
+      "sha256": "264f5c640339f042dd729062cfc04c17f8ea0f29882b538e3848ed8f10edb4da",
+      "bytes": 618,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/leaflet.css": {
+      "path": "/site_libs/leaflet-1.3.1/leaflet.css",
+      "sha256": "354ca46668b891bb2a7f2c345e04b09a3525a6a5bfbbbe33bb989b2bd0ee8926",
+      "bytes": 13562,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-1.3.1/leaflet.js": {
+      "path": "/site_libs/leaflet-1.3.1/leaflet.js",
+      "sha256": "7d64e8a8b6beb191bd8f7e3b7832f6d4283a8f5a3d5367ed78db2dd25606f16b",
+      "bytes": 139645,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-binding-2.1.1/leaflet.js": {
+      "path": "/site_libs/leaflet-binding-2.1.1/leaflet.js",
+      "sha256": "1e123ac3619b825d31d345262ab0c5ba96a703d7af8fc4a43303ba9f14e4ae64",
+      "bytes": 95234,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js": {
+      "path": "/site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js",
+      "sha256": "a6217367660d287da7d8667106454a717f667b9ebff5b9e6c287b3ead334f4f0",
+      "bytes": 24660,
+      "role": "site-lib"
+    },
+    "site_libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js": {
+      "path": "/site_libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js",
+      "sha256": "518916bc55b711306f5e8b9f68eb168c0fe7113892bdb55c914fbf92ce0880a2",
+      "bytes": 185,
+      "role": "site-lib"
+    },
+    "site_libs/leafletfix-1.0.0/leafletfix.css": {
+      "path": "/site_libs/leafletfix-1.0.0/leafletfix.css",
+      "sha256": "484b07fe45b5247de47e475ff5d3899b6d616cd520b79a51b8bfd9ab9ec81196",
+      "bytes": 642,
+      "role": "site-lib"
+    },
+    "site_libs/mapviewCSS-0.0.1/mapview-popup.css": {
+      "path": "/site_libs/mapviewCSS-0.0.1/mapview-popup.css",
+      "sha256": "fa6f1e2e4cadbce7c554da0ad4a565f574acf89b8e894c0d67e33070eaee1ac6",
+      "bytes": 1825,
+      "role": "site-lib"
+    },
+    "site_libs/mapviewCSS-0.0.1/mapview.css": {
+      "path": "/site_libs/mapviewCSS-0.0.1/mapview.css",
+      "sha256": "b317eb67f14416f1ad94d8632a4225bc611abec3502887a61ee74055a8cfb289",
+      "bytes": 35,
+      "role": "site-lib"
+    },
+    "site_libs/moment-2.8.4/moment-timezone-with-data.js": {
+      "path": "/site_libs/moment-2.8.4/moment-timezone-with-data.js",
+      "sha256": "299ede9ea08aad5540621eb8c2807afc45472384f9d1d47b6db2afb151910925",
+      "bytes": 188303,
+      "role": "site-lib"
+    },
+    "site_libs/moment-2.8.4/moment.js": {
+      "path": "/site_libs/moment-2.8.4/moment.js",
+      "sha256": "24160d705663a420a480312709c3d80c687aef6187c0f9d31ab6bdd8e641875a",
+      "bytes": 96381,
+      "role": "site-lib"
+    },
+    "site_libs/moment-fquarter-1.0.0/moment-fquarter.min.js": {
+      "path": "/site_libs/moment-fquarter-1.0.0/moment-fquarter.min.js",
+      "sha256": "46e02e256ca712844c0878acaa465c0327e77a182795b4fd1f5df9723d38adfe",
+      "bytes": 569,
+      "role": "site-lib"
+    },
+    "site_libs/moment-timezone-0.2.5/moment-timezone-with-data.js": {
+      "path": "/site_libs/moment-timezone-0.2.5/moment-timezone-with-data.js",
+      "sha256": "299ede9ea08aad5540621eb8c2807afc45472384f9d1d47b6db2afb151910925",
+      "bytes": 188303,
+      "role": "site-lib"
+    },
+    "site_libs/moment-timezone-0.2.5/moment.js": {
+      "path": "/site_libs/moment-timezone-0.2.5/moment.js",
+      "sha256": "24160d705663a420a480312709c3d80c687aef6187c0f9d31ab6bdd8e641875a",
+      "bytes": 96381,
+      "role": "site-lib"
+    },
+    "site_libs/proj4-2.6.2/proj4.min.js": {
+      "path": "/site_libs/proj4-2.6.2/proj4.min.js",
+      "sha256": "79bb7580ab08cba5db97f13003558f607804782ac8969cebf8bf4380c8804196",
+      "bytes": 76816,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.eot": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.eot",
+      "sha256": "c78c77895c71b28716f9a45c2c0951c2d678ab54cd9e956636053b3154c6aad7",
+      "bytes": 68058,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.svg": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.svg",
+      "sha256": "a5eeae1f19bb8f96aceca5b672e9aa904cce6c0070a3e46159944dc7ff97ee81",
+      "bytes": 387754,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.ttf": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.ttf",
+      "sha256": "8cd0a3d973da5e93fdbdd4563a60419a645bac65e2baafa5025a5118971d82fe",
+      "bytes": 67872,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.woff": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/1e21o67/academicons.woff",
+      "sha256": "296a3eb1deb204e996b572116997ab0c5245b03ad459f0fd22c4060b9d123f74",
+      "bytes": 131616,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/all.css": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/all.css",
+      "sha256": "7b1f9e952be8d0e699e45048ac7333dc9119106bfa8c3bd243af31663ee6aed6",
+      "bytes": 9346,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/academicons-1.9.2/size.css": {
+      "path": "/site_libs/quarto-contrib/academicons-1.9.2/size.css",
+      "sha256": "f1b9a7c71855da4ef8ecc0c4cd76eee558e47eee77e68de1101ba36dafd1c620",
+      "bytes": 1177,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Brands-Regular-400.ttf": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Brands-Regular-400.ttf",
+      "sha256": "42e2c8c09da5345c0b626e16b11e0f8e4c58d122fc68301a797bdf4e5151edf9",
+      "bytes": 180104,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Brands-Regular-400.woff2": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Brands-Regular-400.woff2",
+      "sha256": "49513c0b3ef601e39be4b67994342f30d276c1a7448eedfd8399ed7338966f8b",
+      "bytes": 92140,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Regular-400.ttf": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Regular-400.ttf",
+      "sha256": "d47585213e6b6bd151531bcc9f673528a6c942c612b7f11f0c02410e6d99aef5",
+      "bytes": 76072,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Regular-400.woff2": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Regular-400.woff2",
+      "sha256": "3573bbaebec5d5760d9fd551e797f7aa1a792e52ea118f615faa6278a92de308",
+      "bytes": 25124,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Solid-900.ttf": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Solid-900.ttf",
+      "sha256": "1c2ee7d7d21f255743668be3d54abfbafdaf5d9d299c6955145c7f59de0cc49d",
+      "bytes": 384736,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Solid-900.woff2": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/1e21o67/FontAwesome6Free-Solid-900.woff2",
+      "sha256": "b1cd911c67f3c57ab398d622ba57edc1e1ee6390c3c6e04bc19ccf9d1436153a",
+      "bytes": 133940,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/30yblb/FontAwesome6Free-Regular-400.woff2": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/30yblb/FontAwesome6Free-Regular-400.woff2",
+      "sha256": "3573bbaebec5d5760d9fd551e797f7aa1a792e52ea118f615faa6278a92de308",
+      "bytes": 25124,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/all.css": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/all.css",
+      "sha256": "01336f76c2ea61dbdc1c7e91b7b4b26eb068c6dcbb65ae419d74a535a09cdac7",
+      "bytes": 140119,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css": {
+      "path": "/site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css",
+      "sha256": "8df3fbb7dceb5e3ecee02577fdf7a63eacad2a6a5db3271f9a04bfe480a620e1",
+      "bytes": 351,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/glightbox/glightbox.min.css": {
+      "path": "/site_libs/quarto-contrib/glightbox/glightbox.min.css",
+      "sha256": "6d3f62d4d17969f9c70e9438cf671004725019e868123f2ebc295a006f8d5d2d",
+      "bytes": 13749,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/glightbox/glightbox.min.js": {
+      "path": "/site_libs/quarto-contrib/glightbox/glightbox.min.js",
+      "sha256": "03dfe1fbce92a9f17fcd1a1501213bd820d050ab085c338419ab06a3631c9459",
+      "bytes": 55880,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/glightbox/lightbox.css": {
+      "path": "/site_libs/quarto-contrib/glightbox/lightbox.css",
+      "sha256": "6b3fe0e87e89511791431a74df3b4026b4560b17e135440baa8435d0698afd01",
+      "bytes": 640,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js": {
+      "path": "/site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js",
+      "sha256": "295daa529a6ff66a3155655bf71335649e5698ce3245aba9fd48620bdbfef143",
+      "bytes": 23808,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/videojs/video-js.css": {
+      "path": "/site_libs/quarto-contrib/videojs/video-js.css",
+      "sha256": "a600e503fc0dcb171bd2ce6b639bbb5cf35b91ccc3c045324a7a4e2603683a0f",
+      "bytes": 46607,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-contrib/videojs/video.min.js": {
+      "path": "/site_libs/quarto-contrib/videojs/video.min.js",
+      "sha256": "55a979130309c3f0d4398298f648e90a8ded2df500fdf3c758e9051ecf6229cb",
+      "bytes": 582518,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/anchor.min.js": {
+      "path": "/site_libs/quarto-html/anchor.min.js",
+      "sha256": "69098e105d990f834cff1b7886d873444228ff63c590e5ff834d568f1115ed8b",
+      "bytes": 5888,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/popper.min.js": {
+      "path": "/site_libs/quarto-html/popper.min.js",
+      "sha256": "4d50586b184724d39ddfe0f6582861664eddd5e806e5a79e0dbaa832361414d0",
+      "bytes": 20084,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/quarto-syntax-highlighting.css": {
+      "path": "/site_libs/quarto-html/quarto-syntax-highlighting.css",
+      "sha256": "77cc865a4a90556b2707d6b3da3f53184f5aad57512e3bf08e5b321bd801eb40",
+      "bytes": 2504,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/quarto.js": {
+      "path": "/site_libs/quarto-html/quarto.js",
+      "sha256": "caf90641b0a01eeec1e2fefaa84158a06330c2db747cd767c9beeddad2a0462f",
+      "bytes": 28840,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/tippy.css": {
+      "path": "/site_libs/quarto-html/tippy.css",
+      "sha256": "5969f497d9158d7682f8219c6f13fa67269cdf5bf50a3931d95327151dee5678",
+      "bytes": 1409,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-html/tippy.umd.min.js": {
+      "path": "/site_libs/quarto-html/tippy.umd.min.js",
+      "sha256": "41181eeec6d7ba64cb9165f0e95563e34e026bde79e7c13aeec83270429b6fae",
+      "bytes": 24033,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-listing/list.min.js": {
+      "path": "/site_libs/quarto-listing/list.min.js",
+      "sha256": "0448c6e77b46cc9b9b138eb6b97ddee3896efddecb25dc703d1db9de99bba4f9",
+      "bytes": 19406,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-listing/quarto-listing.js": {
+      "path": "/site_libs/quarto-listing/quarto-listing.js",
+      "sha256": "d5157f75fbd472478ac33625526dc4a5eb487ac2e8f14a30e6bb15d274b92242",
+      "bytes": 6638,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-nav/headroom.min.js": {
+      "path": "/site_libs/quarto-nav/headroom.min.js",
+      "sha256": "5b80cc4165a661a3f2060d6bdb5ccff591f04c4f8e39a06c12d3c2544587cb17",
+      "bytes": 4570,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-nav/quarto-nav.js": {
+      "path": "/site_libs/quarto-nav/quarto-nav.js",
+      "sha256": "a3e9c8c52dd54d783a6d9294357ef104d17d03faf0a404b592216c0d71a9f717",
+      "bytes": 9636,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-search/autocomplete.umd.js": {
+      "path": "/site_libs/quarto-search/autocomplete.umd.js",
+      "sha256": "f48d81545d5edda68f4a8fc0e8aa8f542e7698703993669ba84fc1cb47ae4cfc",
+      "bytes": 92971,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-search/fuse.min.js": {
+      "path": "/site_libs/quarto-search/fuse.min.js",
+      "sha256": "c57339c3fa16b1d69d9a6b46749a8139ef8d4fc9bbfe48144ff897aa7d4222ec",
+      "bytes": 23539,
+      "role": "site-lib"
+    },
+    "site_libs/quarto-search/quarto-search.js": {
+      "path": "/site_libs/quarto-search/quarto-search.js",
+      "sha256": "b685d6ad9b22c04e3f55bcf54e56db7fed463bc881bc92007406e9879a0ec6be",
+      "bytes": 37174,
+      "role": "site-lib"
+    },
+    "site_libs/rstudio_leaflet-1.3.1/images/1px.png": {
+      "path": "/site_libs/rstudio_leaflet-1.3.1/images/1px.png",
+      "sha256": "93ae7d494fad0fb30cbf3ae746a39c4bc7a0f8bbf87fbb587a3f3c01f3c5ce20",
+      "bytes": 68,
+      "role": "site-lib"
+    },
+    "site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css": {
+      "path": "/site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css",
+      "sha256": "75f904423dca262f855ef86c20a07420744d03830e6678fdc5d32d2542fe460d",
+      "bytes": 1092,
+      "role": "site-lib"
+    },
+    "sitemap.xml": {
+      "path": "/sitemap.xml",
+      "sha256": "393bc58a502de1120db743a22ddfd5b9d06fc3aad0b2b4a76abd56c676d9b9ac",
+      "bytes": 1482,
+      "role": "asset"
+    },
+    "software.html": {
+      "path": "/software.html",
+      "sha256": "180254ae079b054cdbf401d6d003e4d4d4743fbf8914d05dfe0547da047b82ea",
+      "bytes": 31497,
+      "role": "page"
+    },
+    "talks.html": {
+      "path": "/talks.html",
+      "sha256": "54af77f5ea8374831c221aa99e1eadd3fe4dd824e875a72ed9b0cc6afc0d52de",
+      "bytes": 26757,
+      "role": "page"
+    }
+  },
+  "live_verification": {
+    "404.html": {
+      "status": 200,
+      "live_bytes": "25177",
+      "etag": "\"75603964698d48b779419f25f1b51e36-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "about.html": {
+      "status": 200,
+      "live_bytes": "30326",
+      "etag": "\"95176abb251889e94e9d89ac9baefc56-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "app.html": {
+      "status": 200,
+      "live_bytes": "28829",
+      "etag": "\"a2156bda091d38887ffcadb4c2fff678-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "data/!publ_list.html": {
+      "status": 200,
+      "live_bytes": "35059",
+      "etag": "\"4325ee7977682eaa878dc45dcd88128f-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "data/!publ_list.md": {
+      "status": 200,
+      "live_bytes": "8617",
+      "etag": "\"3cf725139152683d4580f919d5dd6b0b-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/Tsyplenkov-Anatoly_CV.pdf": {
+      "status": 200,
+      "live_bytes": "145070",
+      "etag": "\"d9cdfdef582f20852ced5e75a08a4a55-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/Tsyplenkov-Anatoly_publications.html": {
+      "status": 200,
+      "live_bytes": "631814",
+      "etag": "\"5067ff2deb1eca79d0cb922c72c9414a-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/Tsyplenkov-Anatoly_publications.pdf": {
+      "status": 200,
+      "live_bytes": "127032",
+      "etag": "\"a560412ff19458b98c90a0d2e32ccc2c-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/dem.tiff": {
+      "status": 200,
+      "live_bytes": "499545",
+      "etag": "\"3d261833546774a84239311bd14db799-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/dem.tiff.aux.xml": {
+      "status": 200,
+      "live_bytes": "415",
+      "etag": "\"ab434349fc1ba82c1e36b1c6342130e7-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/logos/hydrotranslate.png": {
+      "status": 200,
+      "live_bytes": "19055",
+      "etag": "\"9796b16287ff22ae7cff7757c5cedf69-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/logos/rewriter.png": {
+      "status": 200,
+      "live_bytes": "16347",
+      "etag": "\"205a15c51dec53cff042071b123e471f-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/photos/profile-square.jpg": {
+      "status": 200,
+      "live_bytes": "1511365",
+      "etag": "\"88c4cb6b91ea8bea5de4502691159717-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/photos/profile.webp": {
+      "status": 200,
+      "live_bytes": "325078",
+      "etag": "\"07568c038c4d8427af7e0e87ae7c1ebc-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf": {
+      "status": 200,
+      "live_bytes": "2654114",
+      "etag": "\"18aa20ae8a2aaa704e80e47497b85ea7-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "data/social-logo.svg": {
+      "status": 200,
+      "live_bytes": "3048566",
+      "etag": "\"c7f11254b2701ba91ff632a30db8c703-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "favicon.svg": {
+      "status": 200,
+      "live_bytes": "741087",
+      "etag": "\"5bc9d6677066af1b51e7fc34820808b5-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "index.html": {
+      "status": 200,
+      "live_bytes": "36122",
+      "etag": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "listings.json": {
+      "status": 200,
+      "live_bytes": "284",
+      "etag": "\"767ed078900f98d17e942d65ebdf4444-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "papers.html": {
+      "status": 200,
+      "live_bytes": "39564",
+      "etag": "\"6eba8101359c23a2f98b2e09055b7ff4-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl.html": {
+      "status": 200,
+      "live_bytes": "53188",
+      "etag": "\"737ed80509d823c0578bf344e6a39989-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/boxplot-1.png": {
+      "status": 200,
+      "live_bytes": "33244",
+      "etag": "\"a5d139f3d60caadb3109c9c9b5aec8ad-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2020-03-03-tidy-tuesday-nhl/2020-03-03-tidy-tuesday-nhl_files/figure-html/plot-1.png": {
+      "status": 200,
+      "live_bytes": "56324",
+      "etag": "\"ecdbde53fecced58d4f1812a566a926c-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra.html": {
+      "status": 200,
+      "live_bytes": "53330",
+      "etag": "\"81ea9afe9dde6616806b896835aeefdf-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "posts/2022-03-05-soilgrids-terra/2022-03-05-soilgrids-terra_files/figure-html/unnamed-chunk-5-1.png": {
+      "status": 200,
+      "live_bytes": "199547",
+      "etag": "\"fbfc5ebceed8ffc15e67a4cd5fa62f02-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2024/figures/NVCleanstall_escFw822lQ.png": {
+      "status": 200,
+      "live_bytes": "41316",
+      "etag": "\"a6382c844d0e79c19834d8f024f5f400-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2024/figures/WindowsTerminal_kTF31RPuRA.png": {
+      "status": 200,
+      "live_bytes": "53312",
+      "etag": "\"897dd14e36c04b0eb765a32806501630-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2024/figures/benchmarks.png": {
+      "status": 200,
+      "live_bytes": "21999",
+      "etag": "\"46af4d61d39006665c3329149027f139-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/2024/xgboost-gpu-r.html": {
+      "status": 200,
+      "live_bytes": "63611",
+      "etag": "\"8d13d0fc486583f687e3568b82b059f2-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "posts/2024/xgboost-gpu-r_files/figure-html/benchmarks-1.png": {
+      "status": 200,
+      "live_bytes": "21972",
+      "etag": "\"50f6d27a0d17a047e50e7f779dc352d7-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "posts/anzgg2024.html": {
+      "status": 200,
+      "live_bytes": "36373",
+      "etag": "\"fe0fa7ea710fcce2e2ed06d0170f5bc2-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "posts/anzgg2024_caucasus-poster_tsyplenkov.png": {
+      "status": 200,
+      "live_bytes": "1055687",
+      "etag": "\"289b8fdf83a4566f64a41b34a4c9c4ef-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "robots.txt": {
+      "status": 200,
+      "live_bytes": "662",
+      "etag": "\"301049c8c90a629e93cc57454521f6ab-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "search.json": {
+      "status": 200,
+      "live_bytes": "48282",
+      "etag": "\"0d366068218082fc4c7820c77628f7cd-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "sitemap.xml": {
+      "status": 200,
+      "live_bytes": "1482",
+      "etag": "\"8aa3f8f3f393599a0f218adc6754f581-ssl\"",
+      "reachable": true,
+      "bytes_match": true
+    },
+    "software.html": {
+      "status": 200,
+      "live_bytes": "31451",
+      "etag": "\"96aa1bb56aea2888691c73a734963c5e-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    },
+    "talks.html": {
+      "status": 200,
+      "live_bytes": "26711",
+      "etag": "\"cd4c71035cfe831f4b0bad98af476f55-ssl\"",
+      "reachable": true,
+      "bytes_match": false
+    }
+  },
+  "summary": {
+    "file_count": 116,
+    "key_paths_checked": 37,
+    "key_paths_reachable": 37,
+    "key_paths_bytes_match": 25
+  }
+}

@@ -7,8 +7,7 @@ on:
   workflow_dispatch:
 
 # Build and audit only. Publishing is handled by the separate Deploy workflow
-# (push to main / workflow_dispatch) after GitHub Pages is enabled on the
-# root user-site repository. See docs/migration-plan.md Phase 5.
+# (push to main / workflow_dispatch).
 permissions:
   contents: read
 

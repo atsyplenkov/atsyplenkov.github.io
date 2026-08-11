@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-02T15:28:44.164365+00:00",
+  "legacy_source": {
+    "repository": "atsyplenkov/quarto-blog",
+    "revision": "27df661d835c705f3f612029075f8056d93c0249",
+    "commit_date": "2025-05-14T23:38:13+00:00",
+    "commit_subject": "Delete robots.txt"
+  },
+  "root_pages_source": {
+    "repository": "atsyplenkov/atsyplenkov.github.io",
+    "revision": "99171bea956a94c1dc9193f5556054984bc01ec5",
+    "commit_date": "2023-04-04T17:04:44+02:00",
+    "commit_subject": "Add files via upload",
+    "tracked_file_count": 71
+  },
+  "netlify_production": {
+    "site_name": "brilliant-beignet-edeae3",
+    "site_app_url": "https://app.netlify.com/sites/brilliant-beignet-edeae3/deploys",
+    "badge_id": "8b41d3a1-52f0-477d-9d62-8b937b08a9b2",
+    "badge_status_url": "https://api.netlify.com/api/v1/badges/8b41d3a1-52f0-477d-9d62-8b937b08a9b2/deploy-status",
+    "canonical_domain": "anatolii.nz",
+    "netlify_subdomain": "anatolii.netlify.app",
+    "evidence": {
+      "readme_badge": "https://api.netlify.com/api/v1/badges/8b41d3a1-52f0-477d-9d62-8b937b08a9b2/deploy-status",
+      "production_server_header": "Netlify",
+      "notes": "Public Netlify APIs do not expose the production deploy UUID without authentication. Identity is recorded via site name, badge id, live Server header, and representative response etags/content lengths captured below. x-nf-request-id values are per-request and not deploy IDs."
+    },
+    "representative_etags": {
+      "https://anatolii.nz/": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+      "https://anatolii.nz/sitemap.xml": "\"8aa3f8f3f393599a0f218adc6754f581-ssl\"",
+      "https://anatolii.nz/about.html": "\"95176abb251889e94e9d89ac9baefc56-ssl\""
+    }
+  },
+  "dns": {
+    "anatolii.nz": {
+      "NS": [
+        {
+          "name": "anatolii.nz",
+          "type": 2,
+          "ttl": 3600,
+          "data": "dns1.p03.nsone.net."
+        },
+        {
+          "name": "anatolii.nz",
+          "type": 2,
+          "ttl": 3600,
+          "data": "dns2.p03.nsone.net."
+        },
+        {
+          "name": "anatolii.nz",
+          "type": 2,
+          "ttl": 3600,
+          "data": "dns3.p03.nsone.net."
+        },
+        {
+          "name": "anatolii.nz",
+          "type": 2,
+          "ttl": 3600,
+          "data": "dns4.p03.nsone.net."
+        }
+      ],
+      "A": [
+        {
+          "name": "anatolii.nz",
+          "type": 1,
+          "ttl": 120,
+          "data": "13.215.239.219"
+        },
+        {
+          "name": "anatolii.nz",
+          "type": 1,
+          "ttl": 120,
+          "data": "52.74.6.109"
+        }
+      ],
+      "AAAA": [],
+      "TXT": [],
+      "MX": []
+    },
+    "www.anatolii.nz": {
+      "A": [
+        {
+          "name": "www.anatolii.nz",
+          "type": 1,
+          "ttl": 120,
+          "data": "63.176.8.218"
+        },
+        {
+          "name": "www.anatolii.nz",
+          "type": 1,
+          "ttl": 120,
+          "data": "35.157.26.135"
+        }
+      ],
+      "CNAME": []
+    },
+    "atsyplenkov.github.io": {
+      "A": [
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 1,
+          "ttl": 3600,
+          "data": "185.199.110.153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 1,
+          "ttl": 3600,
+          "data": "185.199.108.153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 1,
+          "ttl": 3600,
+          "data": "185.199.109.153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 1,
+          "ttl": 3600,
+          "data": "185.199.111.153"
+        }
+      ],
+      "AAAA": [
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 28,
+          "ttl": 3600,
+          "data": "2606:50c0:8000::153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 28,
+          "ttl": 3600,
+          "data": "2606:50c0:8001::153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 28,
+          "ttl": 3600,
+          "data": "2606:50c0:8002::153"
+        },
+        {
+          "name": "atsyplenkov.github.io",
+          "type": 28,
+          "ttl": 3600,
+          "data": "2606:50c0:8003::153"
+        }
+      ]
+    }
+  },
+  "http_responses": {
+    "https://anatolii.nz/": {
+      "url": "https://anatolii.nz/",
+      "final_url": "https://anatolii.nz/",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "5485",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31530515",
+        "content-length": "36122",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:03 GMT",
+        "etag": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFHXVQFB1EXESP9BCWJNH",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/index.html": {
+      "url": "https://anatolii.nz/index.html",
+      "final_url": "https://anatolii.nz/index.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "321",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535679",
+        "content-length": "36122",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:03 GMT",
+        "etag": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFJ9HXEYXQPEKQ70MFH76",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/about.html": {
+      "url": "https://anatolii.nz/about.html",
+      "final_url": "https://anatolii.nz/about.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "382",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535619",
+        "content-length": "30326",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:04 GMT",
+        "etag": "\"95176abb251889e94e9d89ac9baefc56-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFJPC11VF0NGDKC8HJJ5T",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/papers.html": {
+      "url": "https://anatolii.nz/papers.html",
+      "final_url": "https://anatolii.nz/papers.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "251",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535749",
+        "content-length": "39564",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:04 GMT",
+        "etag": "\"6eba8101359c23a2f98b2e09055b7ff4-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFK2AV8G7Z5WTN9YQHHE2",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/talks.html": {
+      "url": "https://anatolii.nz/talks.html",
+      "final_url": "https://anatolii.nz/talks.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "184",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535816",
+        "content-length": "26711",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:04 GMT",
+        "etag": "\"cd4c71035cfe831f4b0bad98af476f55-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFKENAWCHCD2YQMMZ8PHK",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/software.html": {
+      "url": "https://anatolii.nz/software.html",
+      "final_url": "https://anatolii.nz/software.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "182",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535818",
+        "content-length": "31451",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:05 GMT",
+        "etag": "\"96aa1bb56aea2888691c73a734963c5e-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFKT991CH8YEG6VFTWEH9",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/app.html": {
+      "url": "https://anatolii.nz/app.html",
+      "final_url": "https://anatolii.nz/app.html",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "187",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535813",
+        "content-length": "28829",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:05 GMT",
+        "etag": "\"a2156bda091d38887ffcadb4c2fff678-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFM6B5NJM849N6GGE6ZQN",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/sitemap.xml": {
+      "url": "https://anatolii.nz/sitemap.xml",
+      "final_url": "https://anatolii.nz/sitemap.xml",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "5487",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31530513",
+        "content-length": "1482",
+        "content-type": "application/xml",
+        "date": "Sun, 02 Aug 2026 15:29:06 GMT",
+        "etag": "\"8aa3f8f3f393599a0f218adc6754f581-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFMJEMQ9M2WF7A0T73ZZT",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/robots.txt": {
+      "url": "https://anatolii.nz/robots.txt",
+      "final_url": "https://anatolii.nz/robots.txt",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "5488",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31530513",
+        "content-length": "662",
+        "content-type": "text/plain; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:06 GMT",
+        "etag": "\"301049c8c90a629e93cc57454521f6ab-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFMXXFWSYA7KS66WAV48Y",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/data/Tsyplenkov-Anatoly_CV.pdf": {
+      "url": "https://anatolii.nz/data/Tsyplenkov-Anatoly_CV.pdf",
+      "final_url": "https://anatolii.nz/data/Tsyplenkov-Anatoly_CV.pdf",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "322",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535678",
+        "content-length": "145070",
+        "content-type": "application/pdf",
+        "date": "Sun, 02 Aug 2026 15:29:06 GMT",
+        "etag": "\"d9cdfdef582f20852ced5e75a08a4a55-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFNACGKNPYZ171F5YG23V",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.nz/data/Tsyplenkov-Anatoly_publications.pdf": {
+      "url": "https://anatolii.nz/data/Tsyplenkov-Anatoly_publications.pdf",
+      "final_url": "https://anatolii.nz/data/Tsyplenkov-Anatoly_publications.pdf",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "104",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535896",
+        "content-length": "127032",
+        "content-type": "application/pdf",
+        "date": "Sun, 02 Aug 2026 15:29:07 GMT",
+        "etag": "\"a560412ff19458b98c90a0d2e32ccc2c-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFNP300S49YX5TBRGF2XX",
+        "connection": "close"
+      }
+    },
+    "https://www.anatolii.nz/": {
+      "url": "https://www.anatolii.nz/",
+      "final_url": "https://anatolii.nz/",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "5491",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31530509",
+        "content-length": "36122",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:09 GMT",
+        "etag": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000",
+        "x-nf-request-id": "01KZ1HFQFVGRD7KRG28MAA30WV",
+        "connection": "close"
+      }
+    },
+    "https://anatolii.netlify.app/": {
+      "url": "https://anatolii.netlify.app/",
+      "final_url": "https://anatolii.netlify.app/",
+      "status": 200,
+      "headers": {
+        "accept-ranges": "bytes",
+        "age": "393",
+        "cache-control": "public,max-age=0,must-revalidate",
+        "cache-status": "\"Netlify Edge\"; hit; ttl=31535607",
+        "content-length": "36122",
+        "content-type": "text/html; charset=UTF-8",
+        "date": "Sun, 02 Aug 2026 15:29:29 GMT",
+        "etag": "\"7cc34b4bda14a9a05b8203b9467d31da-ssl\"",
+        "link": "<https://anatolii.nz/>; rel=\"canonical\"",
+        "server": "Netlify",
+        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+        "x-nf-request-id": "01KZ1HGBKC82P3NTQGWVRRVC00",
+        "connection": "close"
+      }
+    },
+    "https://atsyplenkov.github.io/": {
+      "url": "https://atsyplenkov.github.io/",
+      "status": 404,
+      "error": "HTTP Error 404: Not Found",
+      "headers": {
+        "connection": "close",
+        "content-length": "9379",
+        "server": "GitHub.com",
+        "content-type": "text/html; charset=utf-8",
+        "access-control-allow-origin": "*",
+        "strict-transport-security": "max-age=31556952",
+        "etag": "\"6a63df5c-24a3\"",
+        "content-security-policy": "default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "4D3A:388934:4A85B:9F4B0:6A6F6026",
+        "x-github-edge-region": "northeurope",
+        "accept-ranges": "bytes",
+        "date": "Sun, 02 Aug 2026 15:29:30 GMT",
+        "via": "1.1 varnish",
+        "age": "563",
+        "x-served-by": "cache-dub4342-DUB",
+        "x-cache": "HIT",
+        "x-cache-hits": "1",
+        "x-timer": "S1785684570.499974,VS0,VE1",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "c81c699afba5fe995dea4654392eb212a59a8f05"
+      }
+    },
+    "https://atsyplenkov.github.io/gey_2022-overview.html": {
+      "url": "https://atsyplenkov.github.io/gey_2022-overview.html",
+      "final_url": "https://atsyplenkov.github.io/gey_2022-overview.html",
+      "status": 200,
+      "headers": {
+        "connection": "close",
+        "content-length": "83398",
+        "server": "GitHub.com",
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 04 Apr 2023 15:05:13 GMT",
+        "access-control-allow-origin": "*",
+        "strict-transport-security": "max-age=31556952",
+        "etag": "\"642c3ca9-145c6\"",
+        "expires": "Sun, 02 Aug 2026 15:33:41 GMT",
+        "cache-control": "max-age=600",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "6942:F6926:49B58:9E9D5:6A6F60FD",
+        "x-github-edge-region": "northeurope",
+        "accept-ranges": "bytes",
+        "age": "366",
+        "date": "Sun, 02 Aug 2026 15:29:46 GMT",
+        "via": "1.1 varnish",
+        "x-served-by": "cache-dub4398-DUB",
+        "x-cache": "HIT",
+        "x-cache-hits": "0",
+        "x-timer": "S1785684587.955071,VS0,VE1",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "d2678d7de213266439c0cf6a6028814540925ac4"
+      }
+    },
+    "https://atsyplenkov.github.io/kuban_overview.html": {
+      "url": "https://atsyplenkov.github.io/kuban_overview.html",
+      "final_url": "https://atsyplenkov.github.io/kuban_overview.html",
+      "status": 200,
+      "headers": {
+        "connection": "close",
+        "content-length": "1068716",
+        "server": "GitHub.com",
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 04 Apr 2023 15:05:13 GMT",
+        "access-control-allow-origin": "*",
+        "strict-transport-security": "max-age=31556952",
+        "etag": "\"642c3ca9-104eac\"",
+        "expires": "Sun, 02 Aug 2026 15:33:41 GMT",
+        "cache-control": "max-age=600",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "83B0:3A7DA5:4B7C9:A060D:6A6F60FC",
+        "x-github-edge-region": "northeurope",
+        "accept-ranges": "bytes",
+        "date": "Sun, 02 Aug 2026 15:29:47 GMT",
+        "via": "1.1 varnish",
+        "age": "365",
+        "x-served-by": "cache-dub4354-DUB",
+        "x-cache": "HIT",
+        "x-cache-hits": "1",
+        "x-timer": "S1785684587.350335,VS0,VE140",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "385292e4918dc5bed6745e93973c5ec2246eb3cf"
+      }
+    },
+    "https://atsyplenkov.github.io/nil.html": {
+      "url": "https://atsyplenkov.github.io/nil.html",
+      "final_url": "https://atsyplenkov.github.io/nil.html",
+      "status": 200,
+      "headers": {
+        "connection": "close",
+        "content-length": "882507",
+        "server": "GitHub.com",
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 04 Apr 2023 15:05:13 GMT",
+        "access-control-allow-origin": "*",
+        "strict-transport-security": "max-age=31556952",
+        "etag": "\"642c3ca9-d774b\"",
+        "expires": "Sun, 02 Aug 2026 15:33:42 GMT",
+        "cache-control": "max-age=600",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "5BE0:33D717:4D1F2:A2033:6A6F60F9",
+        "x-github-edge-region": "northeurope",
+        "accept-ranges": "bytes",
+        "date": "Sun, 02 Aug 2026 15:29:47 GMT",
+        "via": "1.1 varnish",
+        "age": "365",
+        "x-served-by": "cache-dub4344-DUB",
+        "x-cache": "HIT",
+        "x-cache-hits": "1",
+        "x-timer": "S1785684588.990285,VS0,VE2",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "73f9e0e2326cc4c2ef89bea77e96b9519ada7bfd"
+      }
+    },
+    "https://atsyplenkov.github.io/nil-points.html": {
+      "url": "https://atsyplenkov.github.io/nil-points.html",
+      "final_url": "https://atsyplenkov.github.io/nil-points.html",
+      "status": 200,
+      "headers": {
+        "connection": "close",
+        "content-length": "642484",
+        "server": "GitHub.com",
+        "content-type": "text/html; charset=utf-8",
+        "last-modified": "Tue, 04 Apr 2023 15:05:13 GMT",
+        "access-control-allow-origin": "*",
+        "strict-transport-security": "max-age=31556952",
+        "etag": "\"642c3ca9-9cdb4\"",
+        "expires": "Sun, 02 Aug 2026 15:34:03 GMT",
+        "cache-control": "max-age=600",
+        "x-proxy-cache": "MISS",
+        "x-github-request-id": "0C84:7140:4AA91:9F98A:6A6F610D",
+        "x-github-edge-region": "northeurope",
+        "accept-ranges": "bytes",
+        "date": "Sun, 02 Aug 2026 15:29:48 GMT",
+        "via": "1.1 varnish",
+        "age": "345",
+        "x-served-by": "cache-dub4320-DUB",
+        "x-cache": "HIT",
+        "x-cache-hits": "1",
+        "x-timer": "S1785684588.385744,VS0,VE2",
+        "vary": "Accept-Encoding",
+        "x-fastly-request-id": "829fc04dfd093afce976abe1606e862cc122d156"
+      }
+    }
+  }
+}

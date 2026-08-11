@@ -31,7 +31,7 @@ from typing import Iterable
 from urllib.parse import unquote, urlparse
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-FREEZE_DIR = REPO_ROOT / "docs" / "migration" / "freeze"
+FREEZE_DIR = REPO_ROOT / "scripts" / "fixtures" / "migration-freeze"
 DEFAULT_SITE = REPO_ROOT / "_site"
 
 REQUIRED_MANIFESTS = (
@@ -1731,7 +1731,7 @@ def main(argv: list[str] | None = None) -> int:
         "--freeze-dir",
         type=Path,
         default=FREEZE_DIR,
-        help="Path to freeze manifests (default: docs/migration/freeze)",
+        help="Path to freeze manifests (default: scripts/fixtures/migration-freeze)",
     )
     parser.add_argument(
         "--self-test",

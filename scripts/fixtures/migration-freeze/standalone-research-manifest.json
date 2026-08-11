@@ -1,0 +1,639 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-08-02T15:32:28.879112+00:00",
+  "artifact": {
+    "description": "Standalone research outputs on the root GitHub Pages user site. Required public paths are the four entry HTML documents plus every local file they reference. Extension sources under _extensions/ are not public dependencies of these pages.",
+    "source_repository": "atsyplenkov/atsyplenkov.github.io",
+    "source_revision": "99171bea956a94c1dc9193f5556054984bc01ec5",
+    "public_base": "https://atsyplenkov.github.io",
+    "tracked_file_count_in_source_repo": 71
+  },
+  "entry_pages": {
+    "gey_2022-overview.html": {
+      "path": "/gey_2022-overview.html",
+      "sha256": "fdb27f0b914e08210288ca8870b2b9702f57f36c03ab27fb258d2c2a5f7de284",
+      "bytes": 83398,
+      "dependencies": [
+        "gey_2022-overview_files/libs/bootstrap/bootstrap-icons.css",
+        "gey_2022-overview_files/libs/bootstrap/bootstrap.min.css",
+        "gey_2022-overview_files/libs/bootstrap/bootstrap.min.js",
+        "gey_2022-overview_files/libs/clipboard/clipboard.min.js",
+        "gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph-combined.js",
+        "gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph.css",
+        "gey_2022-overview_files/libs/dygraphs-1.1.1/shapes.js",
+        "gey_2022-overview_files/libs/dygraphs-binding-1.1.1.6/dygraphs.js",
+        "gey_2022-overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js",
+        "gey_2022-overview_files/libs/jquery-1.11.1/jquery.min.js",
+        "gey_2022-overview_files/libs/moment-2.8.4/moment.js",
+        "gey_2022-overview_files/libs/moment-fquarter-1.0.0/moment-fquarter.min.js",
+        "gey_2022-overview_files/libs/moment-timezone-0.2.5/moment-timezone-with-data.js",
+        "gey_2022-overview_files/libs/quarto-html/anchor.min.js",
+        "gey_2022-overview_files/libs/quarto-html/popper.min.js",
+        "gey_2022-overview_files/libs/quarto-html/quarto-syntax-highlighting.css",
+        "gey_2022-overview_files/libs/quarto-html/quarto.js",
+        "gey_2022-overview_files/libs/quarto-html/tippy.css",
+        "gey_2022-overview_files/libs/quarto-html/tippy.umd.min.js"
+      ]
+    },
+    "kuban_overview.html": {
+      "path": "/kuban_overview.html",
+      "sha256": "4aee7aa96d779d9ac71e858984e0c2ba04fc7d5123eeaed3d8833d23c04fc9f1",
+      "bytes": 1068716,
+      "dependencies": [
+        "kuban_overview_files/figure-html/fig-mk-q-plot-1.png",
+        "kuban_overview_files/figure-html/fig-mk-ssd-plot-1.png",
+        "kuban_overview_files/figure-html/fig-mk-ssd-south-1.png",
+        "kuban_overview_files/figure-html/fig-mk-ssd-western-1.png",
+        "kuban_overview_files/figure-html/fig-overview-q-1.png",
+        "kuban_overview_files/figure-html/fig-overview-ssd-1.png",
+        "kuban_overview_files/figure-html/fig-ssy-nw-sw-1.png",
+        "kuban_overview_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js",
+        "kuban_overview_files/libs/bootstrap/bootstrap-icons.css",
+        "kuban_overview_files/libs/bootstrap/bootstrap.min.css",
+        "kuban_overview_files/libs/bootstrap/bootstrap.min.js",
+        "kuban_overview_files/libs/clipboard/clipboard.min.js",
+        "kuban_overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js",
+        "kuban_overview_files/libs/jquery-1.12.4/jquery.min.js",
+        "kuban_overview_files/libs/leaflet-1.3.1/leaflet.css",
+        "kuban_overview_files/libs/leaflet-1.3.1/leaflet.js",
+        "kuban_overview_files/libs/leaflet-binding-2.1.1/leaflet.js",
+        "kuban_overview_files/libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js",
+        "kuban_overview_files/libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js",
+        "kuban_overview_files/libs/leafletfix-1.0.0/leafletfix.css",
+        "kuban_overview_files/libs/proj4-2.6.2/proj4.min.js",
+        "kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.css",
+        "kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.js",
+        "kuban_overview_files/libs/quarto-contrib/glightbox/lightbox.css",
+        "kuban_overview_files/libs/quarto-html/anchor.min.js",
+        "kuban_overview_files/libs/quarto-html/popper.min.js",
+        "kuban_overview_files/libs/quarto-html/quarto-syntax-highlighting.css",
+        "kuban_overview_files/libs/quarto-html/quarto.js",
+        "kuban_overview_files/libs/quarto-html/tippy.css",
+        "kuban_overview_files/libs/quarto-html/tippy.umd.min.js",
+        "kuban_overview_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css"
+      ]
+    },
+    "nil.html": {
+      "path": "/nil.html",
+      "sha256": "1b94ec845b4263fcc5a90607878cccbbdea924a63e0962516254cca1977f30cf",
+      "bytes": 882507,
+      "dependencies": []
+    },
+    "nil-points.html": {
+      "path": "/nil-points.html",
+      "sha256": "dac342e0d5d1b2e55b503e570ce4709bec42f6a9c4c3c8f428444bf93350d9de",
+      "bytes": 642484,
+      "dependencies": []
+    }
+  },
+  "files": {
+    "gey_2022-overview.html": {
+      "path": "/gey_2022-overview.html",
+      "sha256": "fdb27f0b914e08210288ca8870b2b9702f57f36c03ab27fb258d2c2a5f7de284",
+      "bytes": 83398,
+      "role": "entry-page",
+      "live_status": 200,
+      "live_bytes": 83398,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/bootstrap/bootstrap-icons.css": {
+      "path": "/gey_2022-overview_files/libs/bootstrap/bootstrap-icons.css",
+      "sha256": "8f23ffebd0bde7376bdf64ba5f2b2f99ed929de9c518489d5b68addda0208da8",
+      "bytes": 80418,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 80418,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/bootstrap/bootstrap.min.css": {
+      "path": "/gey_2022-overview_files/libs/bootstrap/bootstrap.min.css",
+      "sha256": "641eabdec97f8fd13a8b6cb62870124d50b43ff92813ab8a47661ca649a6afaa",
+      "bytes": 244084,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 244084,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/bootstrap/bootstrap.min.js": {
+      "path": "/gey_2022-overview_files/libs/bootstrap/bootstrap.min.js",
+      "sha256": "f5210fa3e7f0245a4c51eb7f280092c0ef99fdd28c45e17dab8cc5854fdf4fd3",
+      "bytes": 78129,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 78129,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/clipboard/clipboard.min.js": {
+      "path": "/gey_2022-overview_files/libs/clipboard/clipboard.min.js",
+      "sha256": "baff7541be9c20f7f977f6993ce39cfa937a7bde69db6e7beebb8f68372682a1",
+      "bytes": 9034,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 9034,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph-combined.js": {
+      "path": "/gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph-combined.js",
+      "sha256": "d60ed177d7efbc4ba471b04b6b4546d609edfe321303d396c6f5168645fe9a97",
+      "bytes": 125463,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 125463,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph.css": {
+      "path": "/gey_2022-overview_files/libs/dygraphs-1.1.1/dygraph.css",
+      "sha256": "4f5fbb25ace73ac42b8e8144f25ab12802bf390b18f13e647cd9e2ab7da364c0",
+      "bytes": 104,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 104,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/dygraphs-1.1.1/shapes.js": {
+      "path": "/gey_2022-overview_files/libs/dygraphs-1.1.1/shapes.js",
+      "sha256": "b8f7c00d531f65e17a4b160ff684d89fee5ceed74c2f4b848980907c52b0fb43",
+      "bytes": 3304,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 3304,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/dygraphs-binding-1.1.1.6/dygraphs.js": {
+      "path": "/gey_2022-overview_files/libs/dygraphs-binding-1.1.1.6/dygraphs.js",
+      "sha256": "a4f21afb861e0810769832d73f9836602c441e6c54b8085a36665a48aff4cb53",
+      "bytes": 27860,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 27860,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js": {
+      "path": "/gey_2022-overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js",
+      "sha256": "27b6476686b65371035c32f4ad7b548824c4e180a55f62801e740e09e84336e5",
+      "bytes": 33196,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 33196,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/jquery-1.11.1/jquery.min.js": {
+      "path": "/gey_2022-overview_files/libs/jquery-1.11.1/jquery.min.js",
+      "sha256": "540bc6dec1dd4b92ea4d3fb903f69eabf6d919afd48f4e312b163c28cff0f441",
+      "bytes": 95786,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 95786,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/moment-2.8.4/moment.js": {
+      "path": "/gey_2022-overview_files/libs/moment-2.8.4/moment.js",
+      "sha256": "24160d705663a420a480312709c3d80c687aef6187c0f9d31ab6bdd8e641875a",
+      "bytes": 96381,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 96381,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/moment-fquarter-1.0.0/moment-fquarter.min.js": {
+      "path": "/gey_2022-overview_files/libs/moment-fquarter-1.0.0/moment-fquarter.min.js",
+      "sha256": "46e02e256ca712844c0878acaa465c0327e77a182795b4fd1f5df9723d38adfe",
+      "bytes": 569,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 569,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/moment-timezone-0.2.5/moment-timezone-with-data.js": {
+      "path": "/gey_2022-overview_files/libs/moment-timezone-0.2.5/moment-timezone-with-data.js",
+      "sha256": "299ede9ea08aad5540621eb8c2807afc45472384f9d1d47b6db2afb151910925",
+      "bytes": 188303,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 188303,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/anchor.min.js": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/anchor.min.js",
+      "sha256": "d16319f4f1786f685317ae84825bfff47e55c24ea59ce1b801b982271a3de964",
+      "bytes": 6008,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 6008,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/popper.min.js": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/popper.min.js",
+      "sha256": "de866a3965cea96f92ed595f52405de2e32a0a01f2c6cb2f034bf0de2d36bdf8",
+      "bytes": 19728,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 19728,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/quarto-syntax-highlighting.css": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/quarto-syntax-highlighting.css",
+      "sha256": "bc7267ce9a3bf3a0d0dc0aa3eca42181cc65c7184472d15121db091e1b7e9c46",
+      "bytes": 2501,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 2501,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/quarto.js": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/quarto.js",
+      "sha256": "1757c36accf9a5363d37b6b9c8b499381d94fe7bbfc49efc11b5b1a4261c8d5e",
+      "bytes": 21224,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 21224,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/tippy.css": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/tippy.css",
+      "sha256": "5969f497d9158d7682f8219c6f13fa67269cdf5bf50a3931d95327151dee5678",
+      "bytes": 1409,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 1409,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "gey_2022-overview_files/libs/quarto-html/tippy.umd.min.js": {
+      "path": "/gey_2022-overview_files/libs/quarto-html/tippy.umd.min.js",
+      "sha256": "41181eeec6d7ba64cb9165f0e95563e34e026bde79e7c13aeec83270429b6fae",
+      "bytes": 24033,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 24033,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview.html": {
+      "path": "/kuban_overview.html",
+      "sha256": "4aee7aa96d779d9ac71e858984e0c2ba04fc7d5123eeaed3d8833d23c04fc9f1",
+      "bytes": 1068716,
+      "role": "entry-page",
+      "live_status": 200,
+      "live_bytes": 1068716,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-mk-q-plot-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-mk-q-plot-1.png",
+      "sha256": "b045c1b65ce906176c8da028b50ab825af155c50ae0981c36a5c5e1c13e929e1",
+      "bytes": 139976,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 139976,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-mk-ssd-plot-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-mk-ssd-plot-1.png",
+      "sha256": "49903b009eb1981488244c567f2bdd5adb1afd5a623e1c45e80367b27ab6d0f0",
+      "bytes": 89451,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 89451,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-mk-ssd-south-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-mk-ssd-south-1.png",
+      "sha256": "b552a3e3d4998b3ed3c2d26ffae4cf606890c2e356be2db58641470214019cd8",
+      "bytes": 82344,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 82344,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-mk-ssd-western-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-mk-ssd-western-1.png",
+      "sha256": "5a12e36de402b3e7bb40854bcf57945b20b8f3a14f79074ca20eff2305ea3303",
+      "bytes": 103845,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 103845,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-overview-q-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-overview-q-1.png",
+      "sha256": "038abb0307ebb4c4d8240d43b1dbb791ecd7f624fb27ebefeaa78f64bc2ac45f",
+      "bytes": 308920,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 308920,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-overview-ssd-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-overview-ssd-1.png",
+      "sha256": "5ae3bb2d88e5879f45c340fb0d1f2b1f993b091bbc0f1331cf35ae22af209aba",
+      "bytes": 248113,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 248113,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/figure-html/fig-ssy-nw-sw-1.png": {
+      "path": "/kuban_overview_files/figure-html/fig-ssy-nw-sw-1.png",
+      "sha256": "2dec88c2fe1829a7d58f8210fff2af2e0f2c7d2a54064e904e40140ef950ae53",
+      "bytes": 55287,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 55287,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js": {
+      "path": "/kuban_overview_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js",
+      "sha256": "bad275d7afde929591045eda7efd167a3877d5df6d4d753affc9a54eae249faf",
+      "bytes": 7466,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 7466,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/bootstrap/bootstrap-icons.css": {
+      "path": "/kuban_overview_files/libs/bootstrap/bootstrap-icons.css",
+      "sha256": "8f23ffebd0bde7376bdf64ba5f2b2f99ed929de9c518489d5b68addda0208da8",
+      "bytes": 80418,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 80418,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/bootstrap/bootstrap.min.css": {
+      "path": "/kuban_overview_files/libs/bootstrap/bootstrap.min.css",
+      "sha256": "641eabdec97f8fd13a8b6cb62870124d50b43ff92813ab8a47661ca649a6afaa",
+      "bytes": 244084,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 244084,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/bootstrap/bootstrap.min.js": {
+      "path": "/kuban_overview_files/libs/bootstrap/bootstrap.min.js",
+      "sha256": "f5210fa3e7f0245a4c51eb7f280092c0ef99fdd28c45e17dab8cc5854fdf4fd3",
+      "bytes": 78129,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 78129,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/clipboard/clipboard.min.js": {
+      "path": "/kuban_overview_files/libs/clipboard/clipboard.min.js",
+      "sha256": "baff7541be9c20f7f977f6993ce39cfa937a7bde69db6e7beebb8f68372682a1",
+      "bytes": 9034,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 9034,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js": {
+      "path": "/kuban_overview_files/libs/htmlwidgets-1.5.4/htmlwidgets.js",
+      "sha256": "27b6476686b65371035c32f4ad7b548824c4e180a55f62801e740e09e84336e5",
+      "bytes": 33196,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 33196,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/jquery-1.12.4/jquery.min.js": {
+      "path": "/kuban_overview_files/libs/jquery-1.12.4/jquery.min.js",
+      "sha256": "668b046d12db350ccba6728890476b3efee53b2f42dbb84743e5e9f1ae0cc404",
+      "bytes": 97163,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 97163,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leaflet-1.3.1/leaflet.css": {
+      "path": "/kuban_overview_files/libs/leaflet-1.3.1/leaflet.css",
+      "sha256": "354ca46668b891bb2a7f2c345e04b09a3525a6a5bfbbbe33bb989b2bd0ee8926",
+      "bytes": 13562,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 13562,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leaflet-1.3.1/leaflet.js": {
+      "path": "/kuban_overview_files/libs/leaflet-1.3.1/leaflet.js",
+      "sha256": "7d64e8a8b6beb191bd8f7e3b7832f6d4283a8f5a3d5367ed78db2dd25606f16b",
+      "bytes": 139645,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 139645,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leaflet-binding-2.1.1/leaflet.js": {
+      "path": "/kuban_overview_files/libs/leaflet-binding-2.1.1/leaflet.js",
+      "sha256": "1e123ac3619b825d31d345262ab0c5ba96a703d7af8fc4a43303ba9f14e4ae64",
+      "bytes": 95234,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 95234,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js": {
+      "path": "/kuban_overview_files/libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js",
+      "sha256": "a6217367660d287da7d8667106454a717f667b9ebff5b9e6c287b3ead334f4f0",
+      "bytes": 24660,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 24660,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js": {
+      "path": "/kuban_overview_files/libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js",
+      "sha256": "518916bc55b711306f5e8b9f68eb168c0fe7113892bdb55c914fbf92ce0880a2",
+      "bytes": 185,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 185,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/leafletfix-1.0.0/leafletfix.css": {
+      "path": "/kuban_overview_files/libs/leafletfix-1.0.0/leafletfix.css",
+      "sha256": "484b07fe45b5247de47e475ff5d3899b6d616cd520b79a51b8bfd9ab9ec81196",
+      "bytes": 642,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 642,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/proj4-2.6.2/proj4.min.js": {
+      "path": "/kuban_overview_files/libs/proj4-2.6.2/proj4.min.js",
+      "sha256": "79bb7580ab08cba5db97f13003558f607804782ac8969cebf8bf4380c8804196",
+      "bytes": 76816,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 76816,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.css": {
+      "path": "/kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.css",
+      "sha256": "6d3f62d4d17969f9c70e9438cf671004725019e868123f2ebc295a006f8d5d2d",
+      "bytes": 13749,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 13749,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.js": {
+      "path": "/kuban_overview_files/libs/quarto-contrib/glightbox/glightbox.min.js",
+      "sha256": "03dfe1fbce92a9f17fcd1a1501213bd820d050ab085c338419ab06a3631c9459",
+      "bytes": 55880,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 55880,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-contrib/glightbox/lightbox.css": {
+      "path": "/kuban_overview_files/libs/quarto-contrib/glightbox/lightbox.css",
+      "sha256": "2f8238c26bc3af9fb9d5362997e686ccb0c6c386e44ee7a2e9a07194d1b1a639",
+      "bytes": 197,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 197,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/anchor.min.js": {
+      "path": "/kuban_overview_files/libs/quarto-html/anchor.min.js",
+      "sha256": "d16319f4f1786f685317ae84825bfff47e55c24ea59ce1b801b982271a3de964",
+      "bytes": 6008,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 6008,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/popper.min.js": {
+      "path": "/kuban_overview_files/libs/quarto-html/popper.min.js",
+      "sha256": "de866a3965cea96f92ed595f52405de2e32a0a01f2c6cb2f034bf0de2d36bdf8",
+      "bytes": 19728,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 19728,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/quarto-syntax-highlighting.css": {
+      "path": "/kuban_overview_files/libs/quarto-html/quarto-syntax-highlighting.css",
+      "sha256": "bc7267ce9a3bf3a0d0dc0aa3eca42181cc65c7184472d15121db091e1b7e9c46",
+      "bytes": 2501,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 2501,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/quarto.js": {
+      "path": "/kuban_overview_files/libs/quarto-html/quarto.js",
+      "sha256": "1757c36accf9a5363d37b6b9c8b499381d94fe7bbfc49efc11b5b1a4261c8d5e",
+      "bytes": 21224,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 21224,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/tippy.css": {
+      "path": "/kuban_overview_files/libs/quarto-html/tippy.css",
+      "sha256": "5969f497d9158d7682f8219c6f13fa67269cdf5bf50a3931d95327151dee5678",
+      "bytes": 1409,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 1409,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/quarto-html/tippy.umd.min.js": {
+      "path": "/kuban_overview_files/libs/quarto-html/tippy.umd.min.js",
+      "sha256": "41181eeec6d7ba64cb9165f0e95563e34e026bde79e7c13aeec83270429b6fae",
+      "bytes": 24033,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 24033,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "kuban_overview_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css": {
+      "path": "/kuban_overview_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css",
+      "sha256": "75f904423dca262f855ef86c20a07420744d03830e6678fdc5d32d2542fe460d",
+      "bytes": 1092,
+      "role": "dependency",
+      "live_status": 200,
+      "live_bytes": 1092,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "nil-points.html": {
+      "path": "/nil-points.html",
+      "sha256": "dac342e0d5d1b2e55b503e570ce4709bec42f6a9c4c3c8f428444bf93350d9de",
+      "bytes": 642484,
+      "role": "entry-page",
+      "live_status": 200,
+      "live_bytes": 642484,
+      "live_reachable": true,
+      "bytes_match": true
+    },
+    "nil.html": {
+      "path": "/nil.html",
+      "sha256": "1b94ec845b4263fcc5a90607878cccbbdea924a63e0962516254cca1977f30cf",
+      "bytes": 882507,
+      "role": "entry-page",
+      "live_status": 200,
+      "live_bytes": 882507,
+      "live_reachable": true,
+      "bytes_match": true
+    }
+  },
+  "summary": {
+    "entry_page_count": 4,
+    "required_path_count": 54,
+    "reachable_count": 54,
+    "unreachable_count": 0,
+    "all_reachable": true,
+    "all_bytes_match": true
+  }
+}
