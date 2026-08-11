@@ -8,14 +8,31 @@ Add your custom CSS styles here to override or extend the default styles.
   flex-wrap: wrap;
 }
 
-.talk-media {
-  width: 100%;
-  max-width: 100%;
+/* Source code: JetBrains Mono (loaded in page head) */
+code,
+pre,
+pre > code,
+.line-numbers-rows {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+}
+
+/*
+  Media embeds (talk videos, poster PDF iframe).
+  Match the main Tufte text column (~55%) so they do not spill into the
+  margin-note gutter. Full-bleed was ~1.8× the body width at desktop sizes.
+*/
+.talk-media,
+.poster-embed {
+  width: 55%;
+  max-width: 55%;
   margin: 1.5rem 0;
+  box-sizing: border-box;
 }
 
 .talk-media video,
-.talk-media iframe {
+.talk-media iframe,
+.poster-embed iframe {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -29,8 +46,20 @@ Add your custom CSS styles here to override or extend the default styles.
 }
 
 .talk-media iframe {
-  height: min(56.25vw, 36rem);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  min-height: 0;
+}
+
+.poster-embed iframe {
+  width: 100%;
+  /* Portrait poster; keep height bounded so the iframe is not a full viewport. */
+  aspect-ratio: 3 / 4;
+  height: auto;
   min-height: 18rem;
+  max-height: 36rem;
+  background: var(--theme-pre-bg, #f7f7f7);
 }
 
 .talk-media-fallback {
@@ -82,8 +111,19 @@ Add your custom CSS styles here to override or extend the default styles.
 }
 
 @media (max-width: 40rem) {
+  .talk-media,
+  .poster-embed {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .talk-media iframe {
-    height: 56.25vw;
+    aspect-ratio: 16 / 9;
+    height: auto;
     min-height: 0;
+  }
+
+  .poster-embed iframe {
+    max-height: none;
   }
 }

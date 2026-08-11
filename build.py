@@ -1245,7 +1245,11 @@ def render_404_html() -> str:
   <title>Page not found — Anatoly Tsyplenkov</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="The requested page could not be found on Anatoly Tsyplenkov's website.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tufte-css/1.8.0/tufte.min.css">
   <link rel="stylesheet" href="/assets/tufted.css">
   <link rel="stylesheet" href="/assets/theme.css">

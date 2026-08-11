@@ -323,7 +323,32 @@
     "Untitled Page"
   }
   html.title(page-title)
+  // Prefer the migrated Quarto SVG favicon; keep ICO for older browsers.
+  html.elem(
+    "link",
+    attrs: (rel: "icon", href: "/assets/favicon.svg", type: "image/svg+xml"),
+  )
   html.link(rel: "icon", href: "/assets/favicon.ico")
+  // JetBrains Mono for source code (see assets/custom.css).
+  html.elem(
+    "link",
+    attrs: (rel: "preconnect", href: "https://fonts.googleapis.com"),
+  )
+  html.elem(
+    "link",
+    attrs: (
+      rel: "preconnect",
+      href: "https://fonts.gstatic.com",
+      crossorigin: "",
+    ),
+  )
+  html.elem(
+    "link",
+    attrs: (
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap",
+    ),
+  )
 
   let published = format-date(date)
   if published != none {

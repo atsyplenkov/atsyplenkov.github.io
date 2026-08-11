@@ -52,10 +52,8 @@ The third paper in this series built on the first by diving deeper into the vari
   html.elem(
     "iframe",
     attrs: (
-      src: "/data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf#page=1&zoom=20",
+      src: "/data/posters/anzgg2024_caucasus-poster_tsyplenkov.pdf#page=1&zoom=page-width",
       title: "ANZGG 2024 poster",
-      width: "100%",
-      height: "960",
       loading: "lazy",
     ),
     "",
