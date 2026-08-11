@@ -1,7 +1,4 @@
-# anatolii.nz
-
-Personal website of [Anatoly Tsyplenkov](https://anatolii.nz).
-
+# My Personal website
 [![Based on Tufted Blog Template](https://img.shields.io/badge/based%20on-Tufted%20Blog%20Template-239DAD?logo=github)](https://github.com/Yousa-Mirage/Tufted-Blog-Template)
 
 Built with [Typst](https://typst.app/) from the [Tufted Blog Template](https://github.com/Yousa-Mirage/Tufted-Blog-Template).

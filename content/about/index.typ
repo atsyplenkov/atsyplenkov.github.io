@@ -10,8 +10,7 @@
 = About
 
 #figure(
-  image("../data/photos/profile.webp", width: 60%),
-  caption: [Anatoly Tsyplenkov],
+  image("../data/photos/profile.webp", width: 60%)
 )
 
 After a hydrologist license in Lomonosov Moscow State University (MSc.) and several research trips to mountains (Kamchatka and Caucasus), where I was mostly interested in water quality issues (particularly suspended sediments), I became a hydrology/geomorphology Ph.D. student in the pursuit of multi-disciplinarity – the only efficient way to address real-world problems and fundamental science.
