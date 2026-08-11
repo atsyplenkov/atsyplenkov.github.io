@@ -6,8 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Build and audit only. GitHub Pages deployment stays inactive until the
-# approved root-repository handoff (see docs/migration/freeze/README.md).
+# Build and audit only. Publishing is handled by the separate Deploy workflow
+# (push to main / workflow_dispatch) after GitHub Pages is enabled on the
+# root user-site repository. See docs/migration-plan.md Phase 5.
 permissions:
   contents: read
 

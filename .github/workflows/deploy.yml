@@ -1,15 +1,25 @@
 name: Deploy
 
-# Deployment remains inactive for ordinary pushes until the approved
-# root-repository handoff. Use workflow_dispatch only after Pages is enabled
-# for the replacement repository.
+# After the root-repository handoff (rename to atsyplenkov.github.io + Pages
+# source = GitHub Actions), this workflow publishes the certified replacement
+# at the default user-site URL https://atsyplenkov.github.io for pre-cutover
+# staging. Canonical domain and Netlify DNS are unchanged until a later phase.
+#
+# Production build + black-box audit always gate the Pages artifact.
 on:
+  push:
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# One deploy at a time; do not cancel an in-flight production deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
