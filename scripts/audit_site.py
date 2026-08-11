@@ -7,6 +7,12 @@
 
 The audit observes only the deployable tree and the frozen migration
 manifests. It does not import Typst helpers or build internals.
+
+Point ``--site`` at any directory that looks like the published tree
+(local ``_site``, a CI Pages artifact extract, or a downloaded staging
+mirror). Canonical host checks always use ``https://anatolii.nz``; the
+staging host ``https://atsyplenkov.github.io`` is for live reachability
+only and is not substituted into metadata.
 """
 
 from __future__ import annotations
@@ -1056,7 +1062,6 @@ def check_tracer_metadata(report: AuditReport, site_dir: Path) -> None:
                 report.fail(f"Tidy Tuesday post missing expected content: {needle}")
             else:
                 report.ok(f"Tidy Tuesday post contains {needle}")
-            report.ok(f"Tidy Tuesday post contains {needle}")
 
     soil_path = site_dir / "blog/2022-03-05-soilgrids-terra/index.html"
     if soil_path.is_file():
@@ -1696,12 +1701,31 @@ def run_self_test() -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "examples:\n"
+            "  uv run scripts/audit_site.py\n"
+            "  uv run scripts/audit_site.py --site _site\n"
+            "  uv run scripts/audit_site.py --site /tmp/pages-mirror\n"
+            "  uv run scripts/audit_site.py --self-test\n"
+            "\n"
+            "Staging (after root Pages deploy at https://atsyplenkov.github.io):\n"
+            "  download or extract a full site tree into a local directory, then\n"
+            "  pass that directory as --site. Metadata must still use the\n"
+            "  canonical host https://anatolii.nz (not the staging hostname).\n"
+        ),
+    )
     parser.add_argument(
         "--site",
         type=Path,
         default=DEFAULT_SITE,
-        help="Path to the generated site directory (default: _site)",
+        help=(
+            "Path to a deployable site tree to audit (default: _site). "
+            "Accepts a local build output, a downloaded staging mirror, or an "
+            "extracted GitHub Pages artifact."
+        ),
     )
     parser.add_argument(
         "--freeze-dir",
@@ -1719,9 +1743,21 @@ def main(argv: list[str] | None = None) -> int:
     if args.self_test:
         return run_self_test()
 
-    site_dir = args.site if args.site.is_absolute() else REPO_ROOT / args.site
-    freeze_dir = args.freeze_dir if args.freeze_dir.is_absolute() else REPO_ROOT / args.freeze_dir
+    site_dir = args.site.expanduser()
+    if not site_dir.is_absolute():
+        site_dir = REPO_ROOT / site_dir
+    site_dir = site_dir.resolve()
 
+    freeze_dir = args.freeze_dir.expanduser()
+    if not freeze_dir.is_absolute():
+        freeze_dir = REPO_ROOT / freeze_dir
+    freeze_dir = freeze_dir.resolve()
+
+    if not site_dir.is_dir():
+        print(f"audit failed: site directory does not exist: {site_dir}", file=sys.stderr)
+        return 1
+
+    print(f"auditing site tree: {site_dir}", flush=True)
     report = audit_site(site_dir, freeze_dir=freeze_dir)
     if report.failures:
         print(f"audit failed with {len(report.failures)} issue(s); {report.ok_count} check(s) passed")
